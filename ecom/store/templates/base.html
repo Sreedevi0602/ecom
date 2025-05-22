@@ -29,6 +29,19 @@
   <body>
     {% include 'navbar.html' %}
 
+    {% if messages %}
+
+      {% for message in messages %}
+
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{message}}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+      {% endfor %}
+
+    {% endif %}
+
 
     {% block content %}
 
@@ -40,7 +53,7 @@
     <footer class="py-5 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">
-          Copyright &copy; Aloud 2023
+          Copyright &copy; Aloud 2025
         </p>
       </div>
     </footer>
