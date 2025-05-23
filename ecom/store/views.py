@@ -6,6 +6,24 @@ from django.contrib import messages
 from .forms import *
 
 # Create your views here.
+def category(request, cat):
+    cat = cat.replace('_', ' ')
+
+    #Grab category from url
+    try:
+        category = Category.objects.get(name=cat)
+        products = Product.objects.filter(category=category)
+        return render(request, 'category.html', {'products':products, 'category': category})
+    
+    except:
+        messages.success(request, ('Category Does Not Exist'))
+        return redirect('home')
+    
+
+def product(request, pk):
+    product= Product.objects.get(id=pk)
+    return render(request, 'product.html', {'product': product})
+
 def home(request):
     products = Product.objects.all()
     return render(request, 'home.html', {'products': products})
