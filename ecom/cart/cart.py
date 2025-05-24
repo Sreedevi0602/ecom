@@ -9,5 +9,17 @@ class Cart():
         if 'session_key' not in request.session:
             cart=self.session['session_key']={}
 
-            #Make sure cart is available on all pages of site
-            self.cart = cart
+        #Make sure cart is available on all pages of site
+        self.cart = cart
+
+    def add(self,product):
+        product_id=str(product.id)
+
+        #Logic
+        if product_id in self.cart:
+            pass
+
+        else:
+            self.cart[product_id]={'price':str(product.price)}
+
+        self.session.modified = True
