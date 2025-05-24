@@ -13,12 +13,71 @@
       </div>
     </header>
     <!-- Section-->
-    <section class="py-5">
-      <div class="container px-4 px-lg-5 mt-5">
+    
+      
+        <br/><br/>
+
+              <div class="container">
+
+                {% if cart_products %}
+
+{% for product in cart_products %}
+
+     <center><div class="card mb-3" style="width: 1000px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src= "{{ product.image.url }}" class="img-fluid rounded-start" alt="..." style="height: 240px; margin-left: -35px; width: 300px;">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <p class="card-text" style="color: rgb(98, 95, 95);">{{product.book_id}}</p>
+        <h2 class="card-title">{{product.name}}</h2>
+        <h5 class="card-title" style="font-weight: 400;">{{product.author}}</h5>
+
+        {% if product.is_sale %}
+            <!-- Product price-->
+             
+            <strike>
+            <h6 style="font-weight: 300;"> ₹ {{product.price}}
+            </strike>&nbsp;
+            ₹ {{product.sale_price}} </h6>
+        {% else %}
+            <h6 style="font-weight: 300;"> ₹ {{product.price}}</h6>
+            <br>
+
+      
+
+        {% endif %}
+
+        
+
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+
         
         
       </div>
-      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    </div>
+  </div>
+</div>
+</center>
+{% endfor %}
+
+        {% else %}
+
+        <br/><br/><br/><br/>
+        
+
+        <h1 style="text-align: center; color: gray;">Your Cart is Empty...</h1>
+
+        {% endif %}
+
+    </div>
+
+        
+        
+        
+      </div>
+      <br/><br/><br/><br/><br/><br/>
     </section>
 
     {% endblock %}
