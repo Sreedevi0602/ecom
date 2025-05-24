@@ -55,8 +55,14 @@
             </li>
           </ul>
           <form class="d-flex">
-            <a href="{% url 'cart_summary' %}" style="text-decoration: none; color: rgb(50, 56, 50);"><i class="bi-cart-fill fs-2" style="margin-top: 5px;"></i>
-              <span class="badge bg-dark text-white rounded-pill fs-6" style="margin-left: -0.9rem; margin-bottom: -10px; padding-top: 0.3em; padding-bottom: 0.3em;">0</span>
+            <a href="{% url 'cart_summary' %}" 
+            style="text-decoration: none; color: rgb(50, 56, 50);">
+            <i class="bi-cart-fill fs-2" style="margin-top: 5px;"></i>
+              <span class="badge bg-dark text-white rounded-pill fs-6" 
+              style="margin-left: -0.9rem; margin-bottom: -10px; padding-top: 0.3em; padding-bottom: 0.3em;"
+              id="cart_quantity">
+              {{cart|length}}
+            </span>
             </a>
           </form>
         </div>
