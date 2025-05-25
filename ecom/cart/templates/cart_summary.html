@@ -15,7 +15,7 @@
     <!-- Section-->
     
       
-        <br/><br/>
+        <br/><br/><br/><br/>
 
               <div class="container">
 
@@ -55,7 +55,7 @@
                 <div class="col-md-2">
   <div class="d-flex align-items-center gap-2">
     <label for="quantitySelect" class="mb-0">Quantity:</label>
-    <select class="form-select form-select-sm w-auto" id="qty-cart">
+    <select class="form-select form-select-sm w-auto" id="select{{product.id}}">
 
       {% for key, value in quantities.items %}
 
@@ -92,6 +92,8 @@
         
 <div style="margin-top: 15px;">
         <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+
+        <button type="button" data-index="{{product.id}}" class="btn btn-secondary update-cart">Update</button>
 </div>
         
         
@@ -117,8 +119,39 @@
         
         
       </div>
-      <br/><br/><br/><br/><br/><br/>
+      <br/><br/><br/><br/>
     </section>
+
+
+    <script>
+
+      $(document).on('click', '.update-cart', function(e){
+        e.preventDefault();
+
+        //grab product id
+        var productid = $(this).data('index');
+
+        $.ajax({
+          type: 'POST',
+          url: "{% url 'cart_update' %}",
+          data: {
+            product_id: $(this).data('index'),
+            product_qty: $('#select' + productid + ' option:selected').text(),
+            csrfmiddlewaretoken:'{{csrf_token}}',
+            action:'post'
+          },
+
+          success: function(json){
+            location.reload();
+          },
+
+          error: function(xhr, errmsg, err){
+
+          }
+        });
+      })
+
+    </script>
 
     {% endblock %}
   
