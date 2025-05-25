@@ -19,7 +19,7 @@
      <div class="card mb-3">
   <div class="row g-0">
     <div class="col-md-4">
-      <img src= "{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+      <img src= "{{ product.image.url }}" class="img-fluid rounded-start" style="height: 410px;" alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -36,17 +36,42 @@
             ₹ {{product.sale_price}} </h6>
         {% else %}
             <h6 style="font-weight: 300;"> ₹ {{product.price}}</h6>
-            <br>
+            
 
-            ID: {{ product.id }}
+           
 
         {% endif %}
 
+
         <p class="card-text">{{product.description}}</p>
+
+        <div class="col-md-2">
+  <div class="d-flex align-items-center gap-2">
+    <label for="quantitySelect" class="mb-0">Quantity:</label>
+    <select class="form-select form-select-sm w-auto" id="qty-cart">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+  </div>
+</div>
+  
+
+        </div >
+        <div style="margin-left: 15px;">
 
         <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
 
         <button class="btn btn-secondary" type="button" value="{{product.id}}" id="add-cart">Add to Cart</button>
+        
+        </div>
         
       </div>
     </div>
@@ -66,6 +91,7 @@
           url:"{% url 'cart_add' %}",
           data:{
             product_id:$('#add-cart').val(),
+            product_qty:$('#qty-cart option:selected').text(),
             csrfmiddlewaretoken: '{{csrf_token}}',
             action: 'post'
           },

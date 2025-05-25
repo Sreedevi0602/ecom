@@ -26,7 +26,7 @@
      <center><div class="card mb-3" style="width: 1000px;">
   <div class="row g-0">
     <div class="col-md-4">
-      <img src= "{{ product.image.url }}" class="img-fluid rounded-start" alt="..." style="height: 240px; margin-left: -35px; width: 300px;">
+      <img src= "{{ product.image.url }}" class="img-fluid rounded-start" alt="..." style="height: 260px; margin-left: -35px; width: 300px;">
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -34,8 +34,11 @@
         <h2 class="card-title">{{product.name}}</h2>
         <h5 class="card-title" style="font-weight: 400;">{{product.author}}</h5>
 
+        
+
         {% if product.is_sale %}
             <!-- Product price-->
+             
              
             <strike>
             <h6 style="font-weight: 300;"> ₹ {{product.price}}
@@ -43,16 +46,53 @@
             ₹ {{product.sale_price}} </h6>
         {% else %}
             <h6 style="font-weight: 300;"> ₹ {{product.price}}</h6>
-            <br>
-
-      
+            
 
         {% endif %}
 
         
 
-        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+                <div class="col-md-2">
+  <div class="d-flex align-items-center gap-2">
+    <label for="quantitySelect" class="mb-0">Quantity:</label>
+    <select class="form-select form-select-sm w-auto" id="qty-cart">
 
+      {% for key, value in quantities.items %}
+
+      {% if key == product.id|slugify %}
+
+
+      
+
+      <option selected>{{value}}
+
+        {% endif %}
+
+      {% endfor %}
+
+      </option>
+
+
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+
+      
+    </select>
+  </div>
+</div>
+
+        
+<div style="margin-top: 15px;">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+</div>
         
         
       </div>
