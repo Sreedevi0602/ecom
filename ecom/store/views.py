@@ -6,6 +6,14 @@ from django.contrib import messages
 from .forms import *
 
 # Create your views here.
+def category_summary(request):
+    categories= Category.objects.all()
+    return render(request, 'category_summary.html', {'categories': categories})
+
+def shop(request):
+    products = Product.objects.all()
+    return render(request, 'shop.html', {'products': products})
+
 def category(request, cat):
     cat = cat.replace('_', ' ')
 
