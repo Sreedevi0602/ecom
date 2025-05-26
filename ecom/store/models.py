@@ -6,6 +6,7 @@ import datetime
 #Categories of Books
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='uploads/category', default='uploads/category/nonfiction.jpg')
 
     def __str__(self):
         return self.name
