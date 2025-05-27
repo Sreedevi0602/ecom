@@ -6,16 +6,21 @@ from .forms import *
 
 # Create your views here.
 def update_user(request):
-    current_user = User.objects.get(id=request.user.id)
-    user_form = UpdateUserForm(request.POST or None, instance=current_user)
+    if request.user.is_authenticated:
+        current_user = User.objects.get(id=request.user.id)
+        user_form = UpdateUserForm(request.POST or None, instance=current_user)
 
-    if user_form.is_valid():
-        user_form.save()
-        login(request, current_user)
-        messages.success(request,'Your Profile has been Updated Successfully')
-        return redirect('home')
+        if user_form.is_valid():
+            user_form.save()
+            login(request, current_user)
+            messages.success(request,'Your Profile has been Updated Successfully')
+            return redirect('home')
     
-    return render(request, 'update_user.html', {'user_form': user_form})
+        return render(request, 'update_user.html', {'user_form': user_form})
+    
+    else:
+        messages.success(request, 'You need to Sign Up to have Access to This Page')
+        return redirect('home')
 
 
 def category_summary(request):
