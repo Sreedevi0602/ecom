@@ -5,6 +5,34 @@ from django.contrib import messages
 from .forms import *
 
 # Create your views here.
+def update_password(request):
+    if request.user.is_authenticated:
+        current_user = request.user
+
+        #If they fillout the form and click the button
+        if request.method == 'POST':
+            password_form = ChangePasswordForm(current_user, request.POST)
+
+            #If the form is valid
+            if password_form.is_valid():
+                password_form.save()
+                messages.success(request,'Password Updated Successfully')
+                login(request, current_user)
+                return redirect('home')
+            
+            else:
+                for error in list(password_form.errors.values()):
+                    messages.error(request, error)
+                    return redirect('update_password')
+                
+        else:
+            password_form = ChangePasswordForm(current_user)
+            return render(request, 'update_password.html', {'password_form': password_form})
+
+    else:
+        messages.success(request,'You need to Sign Up to have Access to This Page')
+        return redirect('home')
+
 def update_user(request):
     if request.user.is_authenticated:
         current_user = User.objects.get(id=request.user.id)
