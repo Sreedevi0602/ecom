@@ -5,6 +5,23 @@ from django.contrib import messages
 from .forms import *
 
 # Create your views here.
+def update_info(request):
+    if request.user.is_authenticated:
+        current_user = Profile.objects.get(user__id=request.user.id)
+        info_form = UserInfoForm(request.POST or None, instance=current_user)
+
+        if info_form.is_valid():
+            info_form.save()
+            messages.success(request, 'Your Details Have Been Updated Successfully')
+            return redirect('home')
+        
+        return render(request, 'update_info.html', {'info_form': info_form})
+    
+    else:
+        messages.success(request, 'You need to Sign Up to have Access to This Page')
+        return redirect('home')
+
+
 def update_password(request):
     if request.user.is_authenticated:
         current_user = request.user
@@ -122,8 +139,8 @@ def register_user(request):
             #Login User
             user = authenticate(username=username, password=password)
             login(request,user)
-            messages.success(request, ("Registration Completed Successfully. You Are Now Logged into Your Account"))
-            return redirect('home')
+            messages.success(request, ("Registration Completed Successfully. You Are Now Logged into Your Account. Please Fill Out Your Billing Info"))
+            return redirect('update_info')
         
         else:
             messages.success(request,"Something Went wrong with Registration. Please Try again")
