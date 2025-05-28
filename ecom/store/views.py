@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import *
 from django.db.models import Q
+import json
+from cart.cart import Cart
 
 # Create your views here.
 def search(request):
@@ -129,6 +131,24 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
+
+            #shopping cart - pulling it from db
+            current_user = Profile.objects.get(user__id = request.user.id)
+
+            #get their saved cart from db
+            saved_cart = current_user.old_cart
+
+            #convert db string to dictionary
+            if saved_cart:
+                #convert to dictionary using json
+                converted_cart = json.loads(saved_cart)
+                #add the loaded cart dictionary to session
+                cart = Cart(request)
+
+                #loop throgh the cart and additems form db
+                for key, value in converted_cart.items():
+                    cart.db_add(product = key, quantity = value)
+
             messages.success(request, ("Login Completed Successfully"))
             return redirect('home')
         
