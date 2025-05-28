@@ -3,8 +3,28 @@ from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import *
+from django.db.models import Q
 
 # Create your views here.
+def search(request):
+    #Determine if they filled out the form
+    if request.method == 'POST':
+        searched = request.POST['searched']
+
+        #Queuing the Product model
+        searched = Product.objects.filter(Q(name__icontains = searched) | Q(author__icontains = searched) | Q(category__name__icontains = searched) )
+
+        #test for null
+        if not searched:
+            messages.success(request, 'No Result Found')
+            return render(request, 'search.html', {})
+        
+        else:
+            return render(request, 'search.html',{'searched': searched})
+        
+    else:
+        return render(request,'search.html', {})
+
 def update_info(request):
     if request.user.is_authenticated:
         current_user = Profile.objects.get(user__id=request.user.id)
