@@ -6,6 +6,8 @@ from .forms import *
 from django.db.models import Q
 import json
 from cart.cart import Cart
+from payment.forms import ShippingForm
+from payment.models import ShippingAddress
 
 # Create your views here.
 def search(request):
@@ -29,15 +31,22 @@ def search(request):
 
 def update_info(request):
     if request.user.is_authenticated:
+        #current user
         current_user = Profile.objects.get(user__id=request.user.id)
+        #current user's shipping info
+        shipping_user = ShippingAddress.objects.filter(user__id=request.user.id).first()
+        #get original user form
         info_form = UserInfoForm(request.POST or None, instance=current_user)
+        #get user's shipping form
+        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
 
-        if info_form.is_valid():
+        if info_form.is_valid() or shipping_form.is_valid():
             info_form.save()
+            shipping_form.save()
             messages.success(request, 'Your Details Have Been Updated Successfully')
             return redirect('home')
         
-        return render(request, 'update_info.html', {'info_form': info_form})
+        return render(request, 'update_info.html', {'info_form': info_form, 'shipping_form': shipping_form})
     
     else:
         messages.success(request, 'You need to Sign Up to have Access to This Page')
