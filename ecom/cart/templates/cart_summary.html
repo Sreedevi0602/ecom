@@ -13,7 +13,7 @@
       </div>
     </header>
     <!-- Section-->
-    
+    <section>
       
         <br/><br/><br/><br/>
 
@@ -111,11 +111,17 @@
 
 {% endfor %}
 
-<br/>
 
-
-<h3 style="color: grey; margin-left: 60px ;">Total: ₹ {{totals}}</h3>
-
+<div style="display: flex;
+  justify-content: space-between;
+  align-items: center;">
+<div align = "left" style="width: 50vw; margin-left: 60px;">
+<h3 style="color: grey;">Total: ₹ {{totals}}</h3>
+</div>
+<div align = "right" style="width: 50vw; margin-right: 60px;">
+<a href="{% url 'checkout' %}" type="button" class="btn btn-success">Checkout</a>
+</div>
+</div>
 
         {% else %}
 

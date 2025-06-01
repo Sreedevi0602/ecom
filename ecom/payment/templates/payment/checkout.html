@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <!-- Header-->
+    <header class="bg-dark py-5">
+      <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+          <h1 class="display-4 fw-bolder">Checkout</h1>
+          <p class="lead fw-normal text-white-50 mb-0">
+            Review Your Order
+          </p>
+        </div>
+      </div>
+    </header>
+    <!-- Section-->
+    <section>
+      
+        <br/><br/><br/><br/>
+
+              <div class="container">
+  <div class="row">
+    <center>
+      <div class="col-8">
+
+        <div class="card">
+  <h5 class="card-header">Order Summary</h5>
+  <div class="card-body">
+  
+  {% for product in cart_products %}
+    <div class="product-container">
+      <!-- Image -->
+      <div class="product-image">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+      </div>
+
+      <!-- Name + Author on left, Price on right -->
+      <div class="product-details">
+        <div class="product-left">
+          <strong>{{ product.name }}</strong><br/>
+          {{ product.author }}<br/>
+          {% for key, value in quantities.items %}
+            {% if key == product.id|slugify %}
+              <small>Quantity: {{ value }}</small>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <div class="product-right">
+          {% if product.is_sale %}
+            ₹ {{ product.sale_price }}
+          {% else %}
+            ₹ {{ product.price }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  <br/>
+  <div style="display: flex;
+  justify-content: space-between;
+  align-items: center;">
+<div align = "left">
+  <h6 style="color: rgb(81, 78, 78);">Total: ₹ {{totals}}</h6>
+  </div>
+  <div align = "right">
+    <a href="{% url 'cart_summary' %}" type="button" class="btn btn-secondary">Update items</a>
+    </div>
+
+  </div>
+    </div>
+    </div>
+
+
+    <br/><br/>
+
+
+<div class="card">
+  <h5 class="card-header">Shipping Info</h5>
+  <div class="card-body">
+    {{shipping_form.as_p}}
+  </div>
+</div>
+<br/>
+<a href="#" type="button" class="btn btn-success">Continue</a>
+
+      </div>
+
+
+
+
+
+    
+  </div>
+</div>
+
+
+
+        </div>
+    </center>
+    </div>
+    </div>
+      <br/><br/><br/><br/><br/><br/>
+    </section>
+
+
+    <style>
+  .product-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+  }
+
+  .product-image {
+    flex: 0 0 auto;
+    margin-right: 15px;
+  }
+
+  .product-details {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .product-left {
+    text-align: left;
+  }
+
+  .product-right {
+    text-align: right;
+    white-space: nowrap;
+    margin-left: 20px;
+  }
+
+  .product-image img {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    
+  }
+</style>
+
+
+{% endblock %}
+
