@@ -34,7 +34,7 @@ def update_info(request):
         #current user
         current_user = Profile.objects.get(user__id=request.user.id)
         #current user's shipping info
-        shipping_user = ShippingAddress.objects.filter(user__id=request.user.id).first()
+        shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
         #get original user form
         info_form = UserInfoForm(request.POST or None, instance=current_user)
         #get user's shipping form
