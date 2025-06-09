@@ -5,9 +5,9 @@
     <header class="bg-dark py-5">
       <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-          <h1 class="display-4 fw-bolder">Checkout</h1>
+          <h1 class="display-4 fw-bolder">Billing Information</h1>
           <p class="lead fw-normal text-white-50 mb-0">
-            Review Your Order
+            Enter Your Billing Details Here
           </p>
         </div>
       </div>
@@ -23,7 +23,7 @@
       <div class="col-8">
 
         <div class="card">
-  <h5 class="card-header">Order Summary</h5>
+  <h5 class="card-header" style="text-align: left;">Order Summary</h5>
   <div class="card-body">
   
   {% for product in cart_products %}
@@ -62,7 +62,7 @@
   <h6 style="color: rgb(81, 78, 78);">Total: ₹ {{totals}}</h6>
   </div>
   <div align = "right">
-    <a href="{% url 'cart_summary' %}" type="button" class="btn btn-secondary">Update items</a>
+    <a href="{% url 'cart_summary' %}" type="button" class="btn btn-secondary">Update</a>
     </div>
 
   </div>
@@ -74,16 +74,40 @@
 
 
 <div class="card">
-  <h5 class="card-header">Shipping Info</h5>
+  <h5 class="card-header" style="text-align: left;">Shipping Info</h5>
   <div class="card-body">
-    <form method="POST" action="{% url 'billing_info' %}">
-      {% csrf_token %}
-      {{ shipping_form.as_p }}
+    
+     
+      Full Name: {{ shipping_info.shipping_full_name }}<br/>
+      Email: {{ shipping_info.shipping_email }}<br/>
+      Phone: {{ shipping_info.shipping_phone }}<br/>
+      Address Line1: {{ shipping_info.shipping_address1 }}<br/>
+      Address Line2: {{ shipping_info.shipping_address2 }}<br/>
+      City: {{ shipping_info.shipping_city }}<br/>
+      District: {{ shipping_info.shipping_district }}<br/>
+      State: {{ shipping_info.shipping_state }}<br/>
+      PIN: {{ shipping_info.shipping_zipcode }}<br/>
+      Country: {{ shipping_info.shipping_country }}<br/><br/>
+
+      <a href="{% url 'checkout' %}" class="btn btn-secondary" style="margin-left: 632px;">Update</a>
+
+    
   </div>
 </div>
 <br/>
-<button type="submit" class="btn btn-success">Continue</button>
-    </form>
+<div class="card">
+  <h5 class="card-header" style="text-align: left;">Billing Info</h5>
+  <div class="card-body">
+    
+     {{billing_form.as_p}}
+      
+
+    
+  </div>
+</div>
+<br/>
+<a href="#" type="button" class="btn btn-success">Pay Now</a>
+    
     </div>
       </div>
 
@@ -141,6 +165,10 @@
     height: 100px;
     object-fit: cover;
     
+  }
+
+  .card-body{
+    text-align: left;
   }
 </style>
 
