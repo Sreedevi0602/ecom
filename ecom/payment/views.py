@@ -26,6 +26,7 @@ def process_order(request):
         #get order info
         full_name = my_shipping['shipping_full_name']
         email = my_shipping['shipping_email']
+        phone = my_shipping['shipping_phone']
         
 
         #create shipping address from session info
@@ -37,14 +38,14 @@ def process_order(request):
             #logged in user
             user = request.user
             #create order
-            create_order = Order(user=user, full_name=full_name, email=email, ShippingAddress=shipping_address, amount_paid=amount_paid)
+            create_order = Order(user=user, full_name=full_name, email=email, phone=phone, shipping_address=shipping_address, amount_paid=amount_paid)
             create_order.save()
 
             messages.success(request, 'Order Placed Successfully')
             return redirect('home')
         else:
             #guest user
-            create_order = Order(full_name=full_name, email=email, ShippingAddress=shipping_address, amount_paid=amount_paid)
+            create_order = Order(full_name=full_name, email=email,  phone=phone, shipping_address=shipping_address, amount_paid=amount_paid)
             create_order.save()
 
             messages.success(request, 'Order Placed Successfully')
