@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    
+
+    <div class="container">
+        <div class="row">
+            <center>
+                <div class="col-8">
+                    
+<br/><br/>
+<h1>Un-Shipped Items</h1>
+<br/><br/>
+<div>
+    <table class="table table table-striped table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Order</th>
+      <th scope="col">Price</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Customer Email</th>
+      <th scope="col">Customer Phone</th>
+      <th scope="col">Customer Address</th>
+      <th scope="col">Date Ordered</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in orders %}
+    <tr>
+      <td>{{item.id}}</td>
+      <td>₹ {{item.amount_paid}}</td>
+      <td>{{item.full_name}}</td>
+      <td>{{item.email}}</td>
+      <td>{{item.phone}}</td>
+      <td>{{item.shipping_address}}</td>
+      <td>{{item.date_ordered}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br/><br/><br/><br/>
+
+
+</div>
+                    
+                </div>
+            </center>
+        </div>
+    </div>
+
+{% endblock %}
