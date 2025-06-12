@@ -61,19 +61,19 @@
       </div>
     </div>
   {% endfor %}
-    <br/><br/>
+    <br/>
     {% if not order.shipped %}
     <form method="POST">
         {% csrf_token %}
         <input type="hidden" name="shipping_status" value="true">
-        <button type="submit" class="btn btn-success">Mark as Shipped</button>
+        <center><button type="submit" class="btn btn-success">Mark as Shipped</button></center>
     
     </form>
     {% else %}
     <form method="POST">
         {% csrf_token %}
         <input type="hidden" name="shipping_status" value="false">
-        <button type="submit" class="btn btn-danger">Mark as Not Shipped</button>
+        <center><button type="submit" class="btn btn-danger">Mark as Not Shipped</button></center>
     
     </form>
     {% endif %}

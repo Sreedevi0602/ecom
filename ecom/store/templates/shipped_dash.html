@@ -18,9 +18,6 @@
       <th scope="col">Order</th>
       <th scope="col">Price</th>
       <th scope="col">Customer Name</th>
-      <th scope="col">Customer Email</th>
-      <th scope="col">Customer Phone</th>
-      <th scope="col">Customer Address</th>
       <th scope="col">Date Ordered</th>
       <th scope="col">Date Shipped</th>
       <th scope="col">Go To</th>
@@ -33,9 +30,6 @@
       <td>{{item.id}}</td>
       <td>₹ {{item.amount_paid}}</td>
       <td>{{item.full_name}}</td>
-      <td>{{item.email}}</td>
-      <td>{{item.phone}}</td>
-      <td>{{item.shipping_address}}</td>
       <td>{{item.date_ordered}}</td>
       <td>{{item.date_shipped}}</td>
       <td><a href="{% url 'orders' item.id %}" class="btn btn-primary btn-sm">Order {{item.id}}</a></td>
