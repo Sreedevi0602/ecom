@@ -8,6 +8,7 @@ import json
 from cart.cart import Cart
 from payment.forms import ShippingForm
 from payment.models import ShippingAddress, Order, OrderItem
+import datetime
 
 # Create your views here.
 
@@ -18,6 +19,26 @@ def orders(request, pk):
         order = Order.objects.get(id=pk)
         #get order items
         items = OrderItem.objects.filter(order=pk)
+
+        if request.POST:
+            status = request.POST['shipping_status']
+            #check if true or false
+            if status == "true":
+                #get the order
+                order = Order.objects.filter(id=pk)
+                #update the status
+                now = datetime.datetime.now()
+                order.update(shipped=True, date_shipped=now)
+            else:
+                #get the order
+                order = Order.objects.filter(id=pk)
+                #update the status
+                
+                order.update(shipped=False)
+
+            messages.success(request, "Shipping status updated")
+            return redirect('home')
+
         return render(request, 'orders.html', {"order": order, "items": items})
     else:
         messages.success(request, 'Access denied to this page')
@@ -28,6 +49,19 @@ def orders(request, pk):
 def not_shipped_dash(request):
     if request.user.is_authenticated and request.user.is_superuser:
         orders = Order.objects.filter(shipped=False)
+
+        if request.POST:
+            status = request.POST['shipping_status']
+            num = request.POST['num']
+            #get the order
+            order = Order.objects.filter(id=num)
+            #update the status
+            now = datetime.datetime.now()
+            #update the order
+            order.update(shipped=True, date_shipped=now)
+            messages.success(request, "Shipping status updated")
+            return redirect('home')
+        
         return render(request, "not_shipped_dash.html", {"orders": orders})
     
     else:
@@ -38,6 +72,18 @@ def not_shipped_dash(request):
 def shipped_dash(request):
     if request.user.is_authenticated and request.user.is_superuser:
         orders = Order.objects.filter(shipped=True)
+
+        if request.POST:
+            status = request.POST['shipping_status']
+            num = request.POST['num']
+            #get the order
+            order = Order.objects.filter(id=num)
+            #update the status
+            now = datetime.datetime.now()
+            order.update(shipped=False)
+            messages.success(request, "Shipping status updated")
+            return redirect('home')
+
         return render(request, "shipped_dash.html", {"orders": orders})
 
     else:
