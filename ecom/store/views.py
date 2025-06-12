@@ -7,11 +7,24 @@ from django.db.models import Q
 import json
 from cart.cart import Cart
 from payment.forms import ShippingForm
-from payment.models import ShippingAddress, Order
+from payment.models import ShippingAddress, Order, OrderItem
 
 # Create your views here.
 
 #Dashboard
+def orders(request, pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        #get the order
+        order = Order.objects.get(id=pk)
+        #get order items
+        items = OrderItem.objects.filter(order=pk)
+        return render(request, 'orders.html', {"order": order, "items": items})
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
+
+
+
 def not_shipped_dash(request):
     if request.user.is_authenticated and request.user.is_superuser:
         orders = Order.objects.filter(shipped=False)

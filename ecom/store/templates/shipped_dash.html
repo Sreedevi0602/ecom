@@ -6,15 +6,15 @@
     <div class="container">
         <div class="row">
             <center>
-                <div class="col-8">
+                <div class="col-12">
                     
 <br/><br/>
 <h1>Shipped Items</h1>
 <br/><br/>
 <div>
     <table class="table table table-striped table-hover">
-  <thead class="table-dark">
-    <tr>
+  <thead style="background-color: #0a1f44;">
+    <tr style="color: white;">
       <th scope="col">Order</th>
       <th scope="col">Price</th>
       <th scope="col">Customer Name</th>
@@ -23,6 +23,7 @@
       <th scope="col">Customer Address</th>
       <th scope="col">Date Ordered</th>
       <th scope="col">Date Shipped</th>
+      <th scope="col">Go To</th>
     </tr>
   </thead>
   <tbody>
@@ -36,6 +37,7 @@
       <td>{{item.shipping_address}}</td>
       <td>{{item.date_ordered}}</td>
       <td>{{item.date_shipped}}</td>
+      <td><a href="{% url 'orders' item.id %}" class="btn btn-primary">Order {{item.id}}</a></td>
     </tr>
     {% endfor %}
   </tbody>
