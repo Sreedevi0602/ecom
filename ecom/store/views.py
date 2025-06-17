@@ -13,6 +13,23 @@ import datetime
 # Create your views here.
 
 #Dashboard
+def add_book_dash(request):
+    if request.method == "POST":
+        book_form = BooksForm(request.POST, request.FILES)
+        if book_form.is_valid():
+            book_form.save()
+            return redirect('booklist_dash')  
+    else:
+        book_form = BooksForm()
+    
+    return render(request, 'add_book_dash.html', {'book_form': book_form})
+
+
+def booklist_dash(request):
+    books = Product.objects.all()
+    return render(request, 'booklist_dash.html', {'books': books})
+
+
 def orders(request, pk):
     if request.user.is_authenticated and request.user.is_superuser:
         #get the order

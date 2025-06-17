@@ -1,0 +1,89 @@
+
+
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+
+      <h1>Add Product</h1>
+      
+
+<div class="container">
+  <div class="row">
+    <center>
+      <div class="col-8">
+        <br /><br />
+
+        <form method="POST" action="{% url 'add_book_dash' %}">
+          {% csrf_token %}
+          
+
+                        <div class="mb-3">
+                            
+                            {{ book_form.name|add_class:"form-control"|attr:"placeholder:Book Title" }}
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ book_form.author|add_class:"form-control"|attr:"placeholder:Author" }}
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ book_form.price|add_class:"form-control"|attr:"placeholder:Price" }}
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ book_form.category|add_class:"form-control"|attr:"placeholder:Category" }}
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ book_form.description|add_class:"form-control"|attr:"placeholder:Description" }}
+                        </div>
+
+                        
+
+                        <div class="form-check mb-3">
+                            {{ book_form.is_sale|add_class:"form-check-input" }}
+                            <label for="{{ book_form.is_sale.id_for_label }}" class="form-check-label" style="margin-left: -650px;">
+                                On Sale
+                            </label>
+                        </div>
+
+
+                        <div class="mb-3">
+                            
+                            {{ book_form.sale_price|add_class:"form-control"|attr:"placeholder:Sale Price" }}
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ book_form.image|add_class:"form-control"|attr:"placeholder:Image" }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                    
+
+        </form>
+
+        <br /><br /><br /><br /><br /><br />
+      </div>
+    </center>
+  </div>
+</div>
+
+</div>
+</div>
+        </center>
+    </div>
+
+{% endblock %}

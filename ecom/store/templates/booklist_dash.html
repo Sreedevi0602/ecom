@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    
+
+    <div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+<h1>Book List</h1>
+<br/><br/>
+<div>
+    <table class="table table table-striped table-hover">
+  <thead style="background-color: #0a1f44;">
+    <tr style="color: white;">
+      <th scope="col">Book ID</th>
+      <th scope="col">Image</th>
+      <th scope="col">Name</th>
+      <th scope="col">Author</th>
+      <th scope="col">Price</th>
+      <th scope="col">Category</th>
+      <th scope="col">Description</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+    <tr>
+      <td>{{ book.id }}</td>
+      <td><img src="{{ book.image.url }}" alt="Book Image" width="50"></td>
+      <td>{{ book.name }}</td>
+      <td>{{ book.author }}</td>
+      {% if book.is_sale %}
+      <td>₹{{ book.sale_price }}</td>
+      {% else %}
+      <td>₹{{ book.price }}</td>
+      {% endif %}
+      <td>{{ book.category }}</td>
+      <td>{{ book.description }}</td>
+    {% endfor %}
+  </tbody>
+</table>
+<br/><br/><br/><br/>
+
+
+</div>
+                    
+                </div>
+            </center>
+        </div>
+    </div>
+
+{% endblock %}
