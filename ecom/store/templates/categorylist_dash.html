@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    
+
+    <div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+<h1>Categories List</h1>
+<br/><br/>
+<div>
+    <table class="table table table-striped table-hover">
+  <thead style="background-color: #0a1f44;">
+    <tr style="color: white;">
+      <th scope="col">Category ID</th>
+      <th scope="col">Image</th>
+      <th scope="col">Category Name</th>
+      <th scope="col">Go To</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for category in categories %}
+    <tr>
+      <td>{{ category.id }}</td>
+      <td><img src="{{ category.image.url }}" alt="Book Image" width="50"></td>
+      <td>{{ category.name }}</td>
+      <td><a href="{% url 'category_dash' category %}" class="btn btn-primary btn-sm"> View {{category.name}}</a></td>
+    {% endfor %}
+  </tbody>
+</table>
+<br/><br/><br/><br/>
+
+
+</div>
+                    
+                </div>
+            </center>
+        </div>
+    </div>
+
+{% endblock %}

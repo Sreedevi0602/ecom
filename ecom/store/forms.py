@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 from django import forms
-from .models import Profile, Product
+from .models import Profile, Product, Category
 
 
 class SignUpForm(UserCreationForm):
@@ -92,3 +92,9 @@ class BooksForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'author', 'price', 'description', 'image', 'category', 'is_sale', 'sale_price']
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ['name', 'image']

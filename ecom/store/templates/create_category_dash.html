@@ -1,0 +1,56 @@
+
+
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+
+      <h1>Create Category</h1>
+      
+
+<div class="container">
+  <div class="row">
+    <center>
+      <div class="col-8">
+        <br /><br />
+
+        <form method="POST" action="{% url 'create_category_dash' %}">
+          {% csrf_token %}
+          
+
+                        <div class="mb-3">
+                            
+                            {{ cat_form.name|add_class:"form-control"|attr:"placeholder:Category Name" }}
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ cat_form.image|add_class:"form-control"|attr:"placeholder:Image" }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-30">Create</button>
+
+
+                    
+
+        </form>
+
+        <br /><br /><br /><br /><br /><br />
+      </div>
+    </center>
+  </div>
+</div>
+
+</div>
+</div>
+        </center>
+    </div>
+
+{% endblock %}

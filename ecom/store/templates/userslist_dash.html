@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    
+
+    <div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+<h1>Users List</h1>
+<br/><br/>
+<div>
+    <table class="table table table-striped table-hover">
+  <thead style="background-color: #0a1f44;">
+    <tr style="color: white;">
+      <th scope="col">User ID</th>
+      <th scope="col">Username</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Go to</th>
+      <th scope="col">Go to</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in user_data %}
+    <tr>
+      <td>{{ entry.user.id }}</td>
+      <td>{{ entry.user.username }}</td>
+      <td>{{ entry.user.first_name }}</td>
+      <td>{{ entry.user.last_name }}</td>
+      <td>{{ entry.user.email }}</td>
+      <td>
+      {% if entry.profile %}
+      <a href="{% url 'profile_dash' entry.profile.id %}" class="btn btn-primary btn-sm">{{ entry.user.username }}'s Profile</a> 
+      {% else %}  
+      No Profile Found             
+      {% endif %}
+      </td> 
+      <td>
+      {% if entry.user %}
+      <a href="{% url 'order_dash' entry.user.id %}" class="btn btn-primary btn-sm">{{ entry.user.username }}'s Orders</a>  
+      {% else %}  
+      No Orders Yet         
+      {% endif %} 
+      </td>                
+   
+    {% endfor %}
+  </tbody>
+</table>
+<br/><br/><br/><br/>
+
+
+</div>
+                    
+                </div>
+            </center>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    
+
+    <div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+<div class="card" style= "width: 600px; border-width: 3px; border-color: #0a1f44;">
+  <div class="card-body" style="background: #0a1f44;">
+    
+        <h2 style="color: white;">{{user.username}}'s Profile Information</h2>
+    
+  </div>
+</div>
+
+<br/><br/>
+
+<div class="card" style="width: 32rem;">
+  <div class="card-body" style="text-align: left;">
+    
+      <h5>Profile ID: <td>{{profile.id}}</td></h5>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Username:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.user.username}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">First Name:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.user.first_name}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Last Name:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.user.last_name}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Phone:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.phone}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Address 1:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.address1}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Address 2:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.address2}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">City:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.city}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">District:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.district}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">State:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.state}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">PIN:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.zipcode}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Country:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.country}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Date Modified:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{profile.date_modified}}</B><br/>
+   
+    
+  </div>
+</div>
+
+<br/><br/><br/><br/>
+
+
+
+                    
+                </div>
+            </center>
+        </div>
+    </div>
+
+    <style>
+  .item-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+  }
+
+  .item-image {
+    flex: 0 0 auto;
+    margin-right: 15px;
+  }
+
+  .item-image img {
+    height: 70px;
+    width: 65px;
+  }
+
+  .item-details {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .item-left {
+    text-align: left;
+  }
+
+  .item-right {
+    text-align: right;
+    white-space: nowrap;
+    margin-left: 20px;
+  }
+
+  .product-image img {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    
+  }
+</style>
+
+
+{% endblock %}

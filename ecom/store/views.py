@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -13,6 +13,79 @@ import datetime
 # Create your views here.
 
 #Dashboard
+def customers_dash(request):
+    all_orders = Order.objects.order_by('-date_ordered')  # latest first
+
+    seen_emails = set()
+    unique_orders = []
+
+    for order in all_orders:
+        if order.email not in seen_emails:
+            unique_orders.append(order)
+            seen_emails.add(order.email)
+
+    return render(request, 'customers_dash.html', {'orders': unique_orders})
+
+
+def order_dash(request, user):
+    user_instance = get_object_or_404(User, id=user)
+
+    orders = Order.objects.filter(user=user_instance)
+    items = OrderItem.objects.filter(order__in=orders)
+
+    return render(request, 'order_dash.html', {'orders': orders, 'user_instance': user_instance, 'items': items})
+
+
+def profile_dash(request, pk):
+    profile = Profile.objects.get(id=pk)
+    return render(request, 'profile_dash.html', {'profile': profile})
+
+
+def userslist_dash(request):
+    users = User.objects.all()
+    user_data = []
+    
+
+    for user in users:
+        profile = Profile.objects.filter(user=user).first()
+        has_orders = Order.objects.filter(user=user).exists()
+        user_data.append({
+            'user': user, 
+            'profile': profile,
+            'has_orders': has_orders
+        })
+        
+        
+        
+    return render(request, 'userslist_dash.html', {'user_data': user_data})
+
+
+def category_dash(request, cat):
+    cat = cat.replace('_', ' ')
+
+    #Grab category from url
+    category = Category.objects.get(name=cat)
+    products = Product.objects.filter(category=category)
+    return render(request, 'category_dash.html', {'products':products, 'category': category})
+    
+
+
+def categorylist_dash(request):
+    categories = Category.objects.all()
+    return render(request, 'categorylist_dash.html', {'categories': categories})
+
+
+def create_category_dash(request):
+    if request.method == 'POST':
+        cat_form = CategoryForm(request.POST, request.FILES)
+        if cat_form.is_valid():
+            cat_form.save()
+            return redirect('create_categories')
+    else:
+        cat_form = CategoryForm()
+    return render(request, 'create_category_dash.html', {'cat_form': cat_form})
+
+
 def add_book_dash(request):
     if request.method == "POST":
         book_form = BooksForm(request.POST, request.FILES)

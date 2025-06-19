@@ -66,13 +66,15 @@
 
                 <li><a class="dropdown-item" href="{% url 'add_book_dash' %}">Add Product</a></li>
 
-                <li><a class="dropdown-item" href="#">View Categories</a></li>
+                <li><a class="dropdown-item" href="{% url 'categorylist_dash' %}">View Categories</a></li>
 
-                <li><a class="dropdown-item" href="#">Create Categories</a></li>
+                <li><a class="dropdown-item" href="{% url 'create_category_dash' %}">Create Categories</a></li>
 
-                <li><a class="dropdown-item" href="#">Users</a></li>
+                <li><a class="dropdown-item" href="{% url 'userslist_dash' %}">Users</a></li>
 
-                <li><a class="dropdown-item" href="#">Customers</a></li>
+                <li><a class="dropdown-item" href="{% url 'customers_dash' %}">Customers</a></li>
+
+                <li><a class="dropdown-item" href="#">Orders</a></li>
 
                 <li><a class="dropdown-item" href="{% url 'shipped_dash' %}">Shipped Orders</a></li>
 

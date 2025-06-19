@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    
+
+    <div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+<h1>Customer's List</h1>
+<br/><br/>
+<div>
+    <table class="table table table-striped table-hover">
+  <thead style="background-color: #0a1f44;">
+    <tr style="color: white;">
+      <th scope="col">Sl. No.</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Shipping Address</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ order.full_name }}</td>
+      <td>{{ order.email }}</td>
+      <td>{{ order.phone }}</td>
+      <td>{{ order.shipping_address }}</td>
+    </tr>
+    {% endfor %}  
+  </tbody>
+</table>
+<br/><br/><br/><br/>
+
+
+</div>
+                    
+                </div>
+            </center>
+        </div>
+    </div>
+
+{% endblock %}

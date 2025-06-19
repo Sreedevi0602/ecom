@@ -24,4 +24,11 @@ urlpatterns = [
     path('orders/<int:pk>/', views.orders, name= 'orders'),
     path('booklist_dash/', views.booklist_dash, name='booklist_dash'),
     path('add_book_dash/', views.add_book_dash, name='add_book_dash'),
+    path('create_category_dash/', views.create_category_dash, name='create_category_dash'),
+    path('categorylist_dash/', views.categorylist_dash, name='categorylist_dash'),
+    path('category_dash/<str:cat>/', views.category_dash, name='category_dash'),
+    path('userslist_dash/', views.userslist_dash, name= 'userslist_dash'),
+    path('profile_dash/<int:pk>/', views.profile_dash, name= 'profile_dash'),
+    path('order_dash/<int:user>/', views.order_dash, name= 'order_dash'),
+    path('customers_dash/', views.customers_dash, name= 'customers_dash'),
 ]
