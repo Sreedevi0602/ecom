@@ -31,7 +31,7 @@ urlpatterns = [
     path('profile_dash/<int:pk>/', views.profile_dash, name= 'profile_dash'),       #To view profiles of all the signedup users in the dashboard
     path('order_dash/<int:user>/', views.order_dash, name= 'order_dash'),       #To view the orders of each signedup users in the dashboard
     path('customers_dash/', views.customers_dash, name= 'customers_dash'),      #To view all the customers in the dashboard
-    path('customer_order_dash/<str:email>/', views.customer_order_dash, name= 'customer_order_dash'),
+    path('customer_order_dash/<str:email>/', views.customer_order_dash, name= 'customer_order_dash'),       #To view the details of the orders of all customers
     path('orders_dash/', views.orders_dash, name= 'orders_dash'),       #To view all the orders in the dashboard
     path('orderin_dash/<int:pk>/', views.orderin_dash, name= 'orderin_dash'),       #To view the complete details of all the orders in the dashboard
 ]
