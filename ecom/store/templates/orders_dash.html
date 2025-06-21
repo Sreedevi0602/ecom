@@ -9,32 +9,31 @@
                 <div class="col-12">
                     
 <br/><br/>
-<h1>Customer's List</h1>
+<h1>Shipped Items</h1>
 <br/><br/>
 <div>
     <table class="table table table-striped table-hover">
   <thead style="background-color: #0a1f44;">
     <tr style="color: white;">
-      <th scope="col">Sl. No.</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Phone</th>
-      <th scope="col">Shipping Address</th>
+      <th scope="col">Order</th>
+      <th scope="col">Price</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Date Ordered</th>
+      <th scope="col">Shipped</th>
       <th scope="col">Go To</th>
-      
     </tr>
   </thead>
   <tbody>
-    {% for order in orders %}
+    {% for item in orders %}
     <tr>
-      <td>{{ forloop.counter }}</td>
-      <td>{{ order.full_name }}</td>
-      <td>{{ order.email }}</td>
-      <td>{{ order.phone }}</td>
-      <td>{{ order.shipping_address }}</td>
-      <td><a href="{% url 'customer_order_dash' order.email  %}" class="btn btn-primary btn-sm">{{ order.full_name }}'s Orders</a></td>
+      <td>{{item.id}}</td>
+      <td>₹ {{item.amount_paid}}</td>
+      <td>{{item.full_name}}</td>
+      <td>{{item.date_ordered}}</td>
+      <td>{{item.shipped}}</td>
+      <td><a href="{% url 'orderin_dash' item.id %}" class="btn btn-primary btn-sm">Order {{item.id}}</a></td>
     </tr>
-    {% endfor %}  
+    {% endfor %}
   </tbody>
 </table>
 <br/><br/><br/><br/>

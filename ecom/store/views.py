@@ -13,94 +13,175 @@ import datetime
 # Create your views here.
 
 #Dashboard
+def customer_order_dash(request, email):
+    if request.user.is_authenticated and request.user.is_superuser:
+        orders = Order.objects.filter(email=email)
+        items = OrderItem.objects.filter(order__in=orders)
+        return render(request, 'customer_order_dash.html', {'orders': orders, 'items': items})
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
+
+
+def orderin_dash(request, pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        #get the order
+        order = Order.objects.get(id=pk)
+        #get order items
+        items = OrderItem.objects.filter(order=pk)
+        return render(request, 'orderin_dash.html', {"order": order, "items": items})
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
+
+
+def orders_dash(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        orders = Order.objects.all()
+        return render(request, 'orders_dash.html', {'orders': orders})
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
+
+
 def customers_dash(request):
-    all_orders = Order.objects.order_by('-date_ordered')  # latest first
+    if request.user.is_authenticated and request.user.is_superuser:
+        all_orders = Order.objects.order_by('-date_ordered')  # latest first
 
-    seen_emails = set()
-    unique_orders = []
+        seen_emails = set()
+        unique_orders = []
+        customer_email = []
 
-    for order in all_orders:
-        if order.email not in seen_emails:
-            unique_orders.append(order)
-            seen_emails.add(order.email)
+        for order in all_orders:
+            if order.email not in seen_emails:
+                unique_orders.append(order)
+                customer_email.append(order.email)
+                seen_emails.add(order.email)
 
-    return render(request, 'customers_dash.html', {'orders': unique_orders})
+        return render(request, 'customers_dash.html', {'orders': unique_orders, 'email': customer_email})
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
 
 
 def order_dash(request, user):
-    user_instance = get_object_or_404(User, id=user)
+    if request.user.is_authenticated and request.user.is_superuser:
+        user_instance = get_object_or_404(User, id=user)
 
-    orders = Order.objects.filter(user=user_instance)
-    items = OrderItem.objects.filter(order__in=orders)
+        orders = Order.objects.filter(user=user_instance)
+        items = OrderItem.objects.filter(order__in=orders)
 
-    return render(request, 'order_dash.html', {'orders': orders, 'user_instance': user_instance, 'items': items})
+        return render(request, 'order_dash.html', {'orders': orders, 'user_instance': user_instance, 'items': items})
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
 
 
 def profile_dash(request, pk):
-    profile = Profile.objects.get(id=pk)
-    return render(request, 'profile_dash.html', {'profile': profile})
+    if request.user.is_authenticated and request.user.is_superuser:
+        profile = Profile.objects.get(id=pk)
+        return render(request, 'profile_dash.html', {'profile': profile})
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
 
 
 def userslist_dash(request):
-    users = User.objects.all()
-    user_data = []
-    
+    if request.user.is_authenticated and request.user.is_superuser:
+        users = User.objects.all()
+        user_data = []
+        
 
-    for user in users:
-        profile = Profile.objects.filter(user=user).first()
-        has_orders = Order.objects.filter(user=user).exists()
-        user_data.append({
-            'user': user, 
-            'profile': profile,
-            'has_orders': has_orders
-        })
-        
-        
-        
-    return render(request, 'userslist_dash.html', {'user_data': user_data})
+        for user in users:
+            profile = Profile.objects.filter(user=user).first()
+            has_orders = Order.objects.filter(user=user).exists()
+            user_data.append({
+                'user': user, 
+                'profile': profile,
+                'has_orders': has_orders
+            })
+            
+            
+            
+        return render(request, 'userslist_dash.html', {'user_data': user_data})
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
 
 
 def category_dash(request, cat):
-    cat = cat.replace('_', ' ')
+    if request.user.is_authenticated and request.user.is_superuser:
+        cat = cat.replace('_', ' ')
 
-    #Grab category from url
-    category = Category.objects.get(name=cat)
-    products = Product.objects.filter(category=category)
-    return render(request, 'category_dash.html', {'products':products, 'category': category})
+        #Grab category from url
+        category = Category.objects.get(name=cat)
+        products = Product.objects.filter(category=category)
+        return render(request, 'category_dash.html', {'products':products, 'category': category})
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
     
 
 
 def categorylist_dash(request):
-    categories = Category.objects.all()
-    return render(request, 'categorylist_dash.html', {'categories': categories})
+    if request.user.is_authenticated and request.user.is_superuser:
+        categories = Category.objects.all()
+        return render(request, 'categorylist_dash.html', {'categories': categories})
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
 
 
 def create_category_dash(request):
-    if request.method == 'POST':
-        cat_form = CategoryForm(request.POST, request.FILES)
-        if cat_form.is_valid():
-            cat_form.save()
-            return redirect('create_categories')
+    if request.user.is_authenticated and request.user.is_superuser:
+        if request.method == 'POST':
+            cat_form = CategoryForm(request.POST, request.FILES)
+            if cat_form.is_valid():
+                cat_form.save()
+                return redirect('create_categories')
+        else:
+            cat_form = CategoryForm()
+        return render(request, 'create_category_dash.html', {'cat_form': cat_form})
+    
     else:
-        cat_form = CategoryForm()
-    return render(request, 'create_category_dash.html', {'cat_form': cat_form})
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
 
 
 def add_book_dash(request):
-    if request.method == "POST":
-        book_form = BooksForm(request.POST, request.FILES)
-        if book_form.is_valid():
-            book_form.save()
-            return redirect('booklist_dash')  
-    else:
-        book_form = BooksForm()
+    if request.user.is_authenticated and request.user.is_superuser:
+        if request.method == "POST":
+            book_form = BooksForm(request.POST, request.FILES)
+            if book_form.is_valid():
+                book_form.save()
+                return redirect('booklist_dash')  
+        else:
+            book_form = BooksForm()
+        
+        return render(request, 'add_book_dash.html', {'book_form': book_form})
     
-    return render(request, 'add_book_dash.html', {'book_form': book_form})
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
 
 
 def booklist_dash(request):
-    books = Product.objects.all()
-    return render(request, 'booklist_dash.html', {'books': books})
+    if request.user.is_authenticated and request.user.is_superuser:
+        books = Product.objects.all()
+        return render(request, 'booklist_dash.html', {'books': books})
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
 
 
 def orders(request, pk):

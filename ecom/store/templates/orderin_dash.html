@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    
+
+    <div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+<div class="card" style= "width: 600px; border-width: 3px; border-color: #0a1f44;">
+  <div class="card-body" style="background: #0a1f44;">
+    
+        <h2 style="color: white;">Order ID: {{order.id}} - ₹ {{order.amount_paid}}</h2>
+    
+  </div>
+</div>
+
+<br/><br/>
+
+<div class="card" style="width: 32rem;">
+  <div class="card-body" style="text-align: left;">
+    
+      <h5>Order ID: <td>{{order.id}}</td></h5>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Amount Paid:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">₹ {{order.amount_paid}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Customer Full Name:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{order.full_name}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Customer Email:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{order.email}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Customer Phone:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{order.phone}}</B><br/>
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Customer Address:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{order.shipping_address}}</B><br/>
+      {% if order.date_shipped %}
+        <B style="color: rgb(71, 70, 70); font-weight: 400;">Date Ordered:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{order.date_ordered}}</B><br/>
+        <B style="color: rgb(71, 70, 70); font-weight: 400;">Date Shipped:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{order.date_shipped}}</B><br/>
+      {% else %}
+        <B style="color: rgb(71, 70, 70); font-weight: 400;">Date Ordered:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{order.date_ordered}}</B><br/><br/>
+      {% endif %}
+      <B style="color: rgb(71, 70, 70); font-weight: 400;">Items:</B> <br/>
+
+      {% for item in items %}
+        <div class="item-container">
+      <!-- Image -->
+      <div class="item-image">
+        <img src="{{ item.product.image.url }}" alt="{{ item.name }}">
+      </div>
+
+      <!-- Name + Author on left, Price on right -->
+      <div class="item-details">
+        <div class="item-left">
+          <B style="font-weight: 500;">{{ item.product.name }}</B><br/>
+          {{ item.product.author }}<br/>
+          
+              <small>Quantity: {{ item.quantity }}</small>
+            
+        </div>
+        <div class="item-right">
+            ₹ {{ item.price }}
+          
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+    <br/>
+    
+    
+  </div>
+</div>
+
+<br/><br/><br/><br/>
+
+
+
+                    
+                </div>
+            </center>
+        </div>
+    </div>
+
+    <style>
+  .item-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+  }
+
+  .item-image {
+    flex: 0 0 auto;
+    margin-right: 15px;
+  }
+
+  .item-image img {
+    height: 70px;
+    width: 65px;
+  }
+
+  .item-details {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .item-left {
+    text-align: left;
+  }
+
+  .item-right {
+    text-align: right;
+    white-space: nowrap;
+    margin-left: 20px;
+  }
+
+  .product-image img {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    
+  }
+</style>
+
+
+{% endblock %}
