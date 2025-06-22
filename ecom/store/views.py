@@ -7,6 +7,7 @@ from django.db.models import Q
 import json
 from cart.cart import Cart
 from payment.forms import ShippingForm
+from .forms import BooksForm, CategoryForm
 from payment.models import ShippingAddress, Order, OrderItem
 import datetime
 
@@ -63,9 +64,11 @@ def customers_dash(request):
 
         return render(request, 'customers_dash.html', {'orders': unique_orders, 'email': customer_email})
     
+    
     else:
         messages.success(request, 'Access denied to this page')
         return redirect('home')
+
 
 
 def order_dash(request, user):
@@ -115,6 +118,27 @@ def userslist_dash(request):
         messages.success(request, 'Access denied to this page')
         return redirect('home')
 
+def users_del(request, pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        user = User.objects.get(id=pk)
+        user.delete()
+        messages.success(request, 'User Deleted Successfully')
+        
+        users = User.objects.all()
+        user_data = []
+        
+
+        for user in users:
+            profile = Profile.objects.filter(user=user).first()
+            has_orders = Order.objects.filter(user=user).exists()
+            user_data.append({
+                'user': user, 
+                'profile': profile,
+                'has_orders': has_orders
+            })   
+            
+        return render(request, 'userslist_dash.html', {'user_data': user_data})
+
 
 def category_dash(request, cat):
     if request.user.is_authenticated and request.user.is_superuser:
@@ -147,7 +171,8 @@ def create_category_dash(request):
             cat_form = CategoryForm(request.POST, request.FILES)
             if cat_form.is_valid():
                 cat_form.save()
-                return redirect('create_categories')
+                messages.success(request, 'Category created successfully')
+                return redirect('create_category_dash')
         else:
             cat_form = CategoryForm()
         return render(request, 'create_category_dash.html', {'cat_form': cat_form})
@@ -155,6 +180,16 @@ def create_category_dash(request):
     else:
         messages.success(request, 'Access denied to this page')
         return redirect('home')
+    
+
+def category_del(request,pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        cat = Category.objects.get(id=pk)
+        cat.delete()
+        messages.success(request, 'Category deleted successfully')
+
+        categories = Category.objects.all()
+        return render(request, 'categorylist_dash.html', {'categories': categories})
 
 
 def add_book_dash(request):
@@ -163,6 +198,7 @@ def add_book_dash(request):
             book_form = BooksForm(request.POST, request.FILES)
             if book_form.is_valid():
                 book_form.save()
+                messages.success(request, 'Product added successfully')
                 return redirect('booklist_dash')  
         else:
             book_form = BooksForm()
@@ -182,6 +218,15 @@ def booklist_dash(request):
     else:
         messages.success(request, 'Access denied to this page')
         return redirect('home')
+    
+def booklist_del(request, pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        book = Product.objects.get(id=pk)
+        book.delete()
+        messages.success(request, 'Product deleted successfully')
+
+        books = Product.objects.all()
+        return render(request, 'booklist_dash.html', {'books': books})
 
 
 def orders(request, pk):

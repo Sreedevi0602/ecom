@@ -23,11 +23,20 @@ urlpatterns = [
     path('not_shipped_dash', views.not_shipped_dash, name = 'not_shipped_dash'),    #To view unshipped items in the dashboard
     path('orders/<int:pk>/', views.orders, name= 'orders'),     #To view all the details of shipped as well as unshipped items in the dashboard
     path('booklist_dash/', views.booklist_dash, name='booklist_dash'),      #To view all the books in the dashboard
+
+    path('booklist_del/<int:pk>/', views.booklist_del, name='booklist_del'),
+
     path('add_book_dash/', views.add_book_dash, name='add_book_dash'),      #To add new books through the dashboard
     path('create_category_dash/', views.create_category_dash, name='create_category_dash'),     #To add new categories through the dashboard
     path('categorylist_dash/', views.categorylist_dash, name='categorylist_dash'),      #To view all the categories in the dashboard
+
+    path('category_del/<int:pk>/', views.category_del, name= 'category_del'),
+
     path('category_dash/<str:cat>/', views.category_dash, name='category_dash'),        #To view all the books in each categories in the dashboard
     path('userslist_dash/', views.userslist_dash, name= 'userslist_dash'),      #To view all the signedup users in the dashboard
+
+    path('users_del/<int:pk>/', views.users_del, name='users_del'),
+
     path('profile_dash/<int:pk>/', views.profile_dash, name= 'profile_dash'),       #To view profiles of all the signedup users in the dashboard
     path('order_dash/<int:user>/', views.order_dash, name= 'order_dash'),       #To view the orders of each signedup users in the dashboard
     path('customers_dash/', views.customers_dash, name= 'customers_dash'),      #To view all the customers in the dashboard

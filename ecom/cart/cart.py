@@ -1,6 +1,7 @@
 from store.models import Product, Profile
 
 class Cart():
+    '''
     def __init__(self, request):
         self.session = request.session
 
@@ -16,7 +17,33 @@ class Cart():
 
         #Make sure cart is available on all pages of site
         self.cart = cart
+    '''
 
+    def __init__(self, request):
+        self.session = request.session
+
+        #get request
+        self.request = request
+
+        #Get the current session key if it exists
+        cart=self.session.get('session_key')
+
+        #If the user is new, no session key. Create one
+        if 'session_key' not in request.session:
+            cart=self.session['session_key']={}
+
+        #Make sure cart is available on all pages of site
+        self.cart = {}
+
+        for product_id, item in cart.items():
+            try:
+                Product.objects.get(id=product_id)
+                self.cart[product_id] = item
+            except Product.DoesNotExist:
+                continue
+
+        self.session['session_key'] = self.cart
+        self.session.modified = True
 
 
     def add(self,product,quantity):
@@ -72,8 +99,13 @@ class Cart():
 
 
 
+    '''
     def __len__(self):
         return len(self.cart)
+    '''
+
+    def __len__(self):
+        return sum(self.cart.values())
     
 
 

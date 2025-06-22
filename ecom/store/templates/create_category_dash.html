@@ -21,7 +21,7 @@
       <div class="col-8">
         <br /><br />
 
-        <form method="POST" action="{% url 'create_category_dash' %}">
+        <form method="POST" action="{% url 'create_category_dash' %}" enctype="multipart/form-data">
           {% csrf_token %}
           
 

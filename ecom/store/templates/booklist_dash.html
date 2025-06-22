@@ -42,7 +42,7 @@
       <td>{{ book.category }}</td>
       <td>{{ book.description }}</td>
       <td><a href="#"><i class="bi bi-pencil fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
-      <td><a href="#"><i class="bi bi-trash fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
+      <td><a href="{% url 'booklist_del' book.pk %}"><i class="bi bi-trash fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
     {% endfor %}
   </tbody>
 </table>
