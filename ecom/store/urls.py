@@ -16,6 +16,7 @@ urlpatterns = [
     path('category_summary/', views.category_summary, name = 'category_summary'),
     path('search/', views.search, name = 'search'),
     path('my_orders/', views.my_orders, name = 'my_orders'),
+    path('cancel_order/<int:pk>/', views.cancel_order, name = 'cancel_order'),
 
 
 

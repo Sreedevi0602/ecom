@@ -14,6 +14,16 @@ import datetime
 # Create your views here.
 
 #Dashboard
+def cancel_order(request,pk):
+    if request.user.is_authenticated:
+        order = get_object_or_404(Order, user=request.user, id=pk)
+        order.delete()
+        messages.success(request, 'Order cancelled successfully')
+
+        orders = Order.objects.filter(user=request.user)
+        return render(request, 'my_orders.html', {'orders': orders})
+
+
 def my_orders(request):
     if request.user.is_authenticated:
         user = request.user
