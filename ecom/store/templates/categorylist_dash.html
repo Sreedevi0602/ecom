@@ -30,7 +30,7 @@
       <td><img src="{{ category.image.url }}" alt="Book Image" width="50"></td>
       <td>{{ category.name }}</td>
       <td><a href="{% url 'category_dash' category %}" class="btn btn-primary btn-sm"> View {{category.name}}</a></td>
-      <td><a href="#"><i class="bi bi-pencil fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
+      <td><a href="{% url 'category_edit' category.pk %}"><i class="bi bi-pencil fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
       <td><a href="{% url 'category_del' category.pk %}"><i class="bi bi-trash fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
     {% endfor %}
   </tbody>

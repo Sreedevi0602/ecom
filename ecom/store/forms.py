@@ -114,3 +114,12 @@ class BookUpdateForm(forms.ModelForm):
 	class Meta:
 		model = Product
 		fields = ['name', 'author', 'price', 'description', 'image', 'category', 'is_sale', 'sale_price']
+
+
+class CategoryUpdateForm(forms.ModelForm):
+	name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name', 'type': 'text', 'name': 'name'}), required=False)
+	image = forms.ImageField(label='', widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'type': 'file', 'name': 'image'}), required=False)
+
+	class Meta:
+		model = Category
+		fields = ['name', 'image']

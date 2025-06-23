@@ -1,0 +1,68 @@
+
+
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+
+      <h1>Update Category</h1>
+      
+
+<div class="container">
+  <div class="row">
+    <center>
+      <div class="col-8">
+        <br /><br />
+
+        <form method="POST" action="{% url 'category_update' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+                        <div class="mb-3">
+                            
+                            <input type="hidden" name="id" value="{{cat.id}}">
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ category_update_form.name|add_class:"form-control"|attr:"placeholder:Category Name" }}
+                        </div>
+
+                        <div class="mb-3" id="image-link-wrapper">
+                            
+                            {{ category_update_form.image|add_class:"form-control"|attr:"placeholder:Image" }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-30">Update</button>
+
+
+                    
+
+        </form>
+
+        <br /><br /><br /><br /><br /><br />
+      </div>
+    </center>
+  </div>
+</div>
+
+</div>
+</div>
+        </center>
+    </div>
+
+    <style>
+  #image-link-wrapper a {
+    color: black;            /* Change to any color you want */
+    font-weight: 100;
+    text-decoration: underline;
+  }
+</style>
+
+{% endblock %}

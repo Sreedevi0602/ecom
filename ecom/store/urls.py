@@ -35,6 +35,8 @@ urlpatterns = [
     path('categorylist_dash/', views.categorylist_dash, name='categorylist_dash'),      #To view all the categories in the dashboard
 
     path('category_del/<int:pk>/', views.category_del, name= 'category_del'),
+    path('category_edit/<int:pk>/', views.category_edit, name= 'category_edit'),
+    path('category_update/', views.category_update, name= 'category_update'),
 
     path('category_dash/<str:cat>/', views.category_dash, name='category_dash'),        #To view all the books in each categories in the dashboard
     path('userslist_dash/', views.userslist_dash, name= 'userslist_dash'),      #To view all the signedup users in the dashboard

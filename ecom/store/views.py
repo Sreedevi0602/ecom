@@ -7,7 +7,7 @@ from django.db.models import Q
 import json
 from cart.cart import Cart
 from payment.forms import ShippingForm
-from .forms import BooksForm, CategoryForm, BookUpdateForm
+from .forms import BooksForm, CategoryForm, BookUpdateForm, CategoryUpdateForm
 from payment.models import ShippingAddress, Order, OrderItem
 import datetime
 
@@ -223,6 +223,39 @@ def category_del(request,pk):
 
         categories = Category.objects.all()
         return render(request, 'categorylist_dash.html', {'categories': categories})
+    
+
+def category_edit(request,pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        cat = Category.objects.get(id=pk)
+        category_update_form = CategoryUpdateForm(instance=cat)
+        return render(request, 'category_edit.html', {'cat': cat, 'category_update_form': category_update_form})
+    
+
+def category_update(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        if request.method == "POST":
+            cat_id = request.POST.get("id")
+            cat = Category.objects.get(id=cat_id)
+
+            category_update_form = CategoryUpdateForm(request.POST, request.FILES, instance=cat)
+
+            if category_update_form.is_valid():
+                category_update_form.save()
+                messages.success(request, 'Category updated successfully')
+                return redirect('categorylist_dash')
+            
+            else:
+                messages.error(request, 'Invalid form')
+
+        else:
+            return redirect('category_edit')
+        
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
+
 
 
 def add_book_dash(request):
@@ -263,14 +296,14 @@ def booklist_del(request, pk):
     
 
 def booklist_edit(request,pk):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.is_superuser:
         book = Product.objects.get(id=pk)
         book_update_form = BookUpdateForm(instance=book)
         return render(request, 'booklist_edit.html', {'book': book, 'book_update_form': book_update_form})
 
 
 def booklist_update(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.is_superuser:
         if request.method == "POST":
             book_id = request.POST.get("id")
             book = Product.objects.get(id=book_id)
