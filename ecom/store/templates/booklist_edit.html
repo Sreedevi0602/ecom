@@ -1,0 +1,103 @@
+
+
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+
+      <h1>Update Product Details</h1>
+      
+
+<div class="container">
+  <div class="row">
+    <center>
+      <div class="col-8">
+        <br /><br />
+
+        <form method="POST" action="{% url 'booklist_update' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+                        <div class="mb-3">
+                            
+                            <input type="hidden" name="id" value="{{book.id}}">
+                        </div>
+
+
+                        <div class="mb-3">
+                            
+                            {{ book_update_form.name|add_class:"form-control"|attr:"placeholder:Book Title" }}
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ book_update_form.author|add_class:"form-control"|attr:"placeholder:Author" }}
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ book_update_form.price|add_class:"form-control"|attr:"placeholder:Price" }}
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ book_update_form.category|add_class:"form-control"|attr:"placeholder:Category" }}
+                        </div>
+
+                        <div class="mb-3">
+                            
+                            {{ book_update_form.description|add_class:"form-control"|attr:"placeholder:Description" }}
+                        </div>
+
+                        
+
+                        <div class="form-check mb-3">
+                            {{ book_update_form.is_sale|add_class:"form-check-input" }}
+                            <label for="{{ book_form.is_sale.id_for_label }}" class="form-check-label" style="margin-left: -650px;">
+                                On Sale
+                            </label>
+                        </div>
+
+
+                        <div class="mb-3">
+                            
+                            {{ book_update_form.sale_price|add_class:"form-control"|attr:"placeholder:Sale Price" }}
+                        </div>
+
+                        <div class="mb-3" id="image-link-wrapper">
+                            
+                            {{ book_update_form.image|add_class:"form-control"|attr:"placeholder:Image" }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-40">Submit</button>
+                    
+
+        </form>
+
+        <br /><br /><br /><br /><br /><br />
+      </div>
+    </center>
+  </div>
+</div>
+
+</div>
+</div>
+        </center>
+    </div>
+
+    <style>
+  #image-link-wrapper a {
+    color: black;            /* Change to any color you want */
+    font-weight: 100;
+    text-decoration: underline;
+  }
+</style>
+
+
+{% endblock %}

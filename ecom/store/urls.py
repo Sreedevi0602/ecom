@@ -27,6 +27,8 @@ urlpatterns = [
     path('booklist_dash/', views.booklist_dash, name='booklist_dash'),      #To view all the books in the dashboard
 
     path('booklist_del/<int:pk>/', views.booklist_del, name='booklist_del'),
+    path('booklist_edit/<int:pk>/', views.booklist_edit, name= 'booklist_edit'),
+    path('booklist_update/', views.booklist_update, name = 'booklist_update'),
 
     path('add_book_dash/', views.add_book_dash, name='add_book_dash'),      #To add new books through the dashboard
     path('create_category_dash/', views.create_category_dash, name='create_category_dash'),     #To add new categories through the dashboard

@@ -98,3 +98,19 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['name', 'image']
+
+
+class BookUpdateForm(forms.ModelForm):
+	name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name', 'type': 'text', 'name': 'name'}), required=False)
+	author = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Author', 'type': 'text', 'name': 'author'}), required=False)
+	price = forms.DecimalField(label='', widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Price', 'type': 'number', 'name': 'price'}), required=False)
+	category = forms.ModelChoiceField(label='', queryset=Category.objects.all(), required=False, widget=forms.Select(attrs={'class': 'form-control'}))
+	description = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Description', 'type': 'text', 'name': 'description'}), required=False)
+	image = forms.ImageField(label='', widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'type': 'file', 'name': 'image'}), required=False)
+	is_sale = forms.BooleanField(label='', widget=forms.CheckboxInput(attrs={'class': 'form-check-input', 'type': 'checkbox', 'name': 'is_sale'}), required=False)
+	sale_price = forms.DecimalField(label='', widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Sale Price', 'type': 'number', 'name': 'name'}), required=False)
+
+
+	class Meta:
+		model = Product
+		fields = ['name', 'author', 'price', 'description', 'image', 'category', 'is_sale', 'sale_price']

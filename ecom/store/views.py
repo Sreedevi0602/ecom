@@ -7,7 +7,7 @@ from django.db.models import Q
 import json
 from cart.cart import Cart
 from payment.forms import ShippingForm
-from .forms import BooksForm, CategoryForm
+from .forms import BooksForm, CategoryForm, BookUpdateForm
 from payment.models import ShippingAddress, Order, OrderItem
 import datetime
 
@@ -260,6 +260,36 @@ def booklist_del(request, pk):
 
         books = Product.objects.all()
         return render(request, 'booklist_dash.html', {'books': books})
+    
+
+def booklist_edit(request,pk):
+    if request.user.is_authenticated:
+        book = Product.objects.get(id=pk)
+        book_update_form = BookUpdateForm(instance=book)
+        return render(request, 'booklist_edit.html', {'book': book, 'book_update_form': book_update_form})
+
+
+def booklist_update(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            book_id = request.POST.get("id")
+            book = Product.objects.get(id=book_id)
+
+            book_update_form = BookUpdateForm(request.POST, request.FILES, instance=book)
+
+            if book_update_form.is_valid():
+                book_update_form.save()
+                messages.success(request, 'Product Updated Successfully')
+                return redirect('booklist_dash')
+            else:
+                messages.error(request, 'Invalid Form')
+
+        return redirect('booklist_dash')
+    
+    else:
+        messages.error(request, 'Access denied to this page')
+        return redirect('home')
+            
 
 
 def orders(request, pk):
