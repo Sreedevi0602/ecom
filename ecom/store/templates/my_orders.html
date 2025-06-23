@@ -59,7 +59,11 @@
     </div>
   {% endfor %}
     <br/>
+    {% if not order.shipped %}
   <center><a href="{% url 'cancel_order' order.pk %}" class="btn btn-danger">Cancel</a></center>
+    {% else %}
+    <p style="font-size:x-small;">Shipped Orders are non-cancellable</p>
+    {% endif %}
     
   </div>
 </div>
