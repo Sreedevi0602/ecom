@@ -42,5 +42,8 @@ urlpatterns = [
     path('customers_dash/', views.customers_dash, name= 'customers_dash'),      #To view all the customers in the dashboard
     path('customer_order_dash/<str:email>/', views.customer_order_dash, name= 'customer_order_dash'),       #To view the details of the orders of all customers
     path('orders_dash/', views.orders_dash, name= 'orders_dash'),       #To view all the orders in the dashboard
+
+    path('order_del/<int:pk>/', views.order_del, name= 'order_del'),
+
     path('orderin_dash/<int:pk>/', views.orderin_dash, name= 'orderin_dash'),       #To view the complete details of all the orders in the dashboard
 ]

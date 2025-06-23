@@ -21,9 +21,6 @@
       <th scope="col">Phone</th>
       <th scope="col">Shipping Address</th>
       <th scope="col">Go To</th>
-      <th scope="col">Update</th>
-      <th scope="col">Delete</th>
-      
     </tr>
   </thead>
   <tbody>
@@ -35,9 +32,6 @@
       <td>{{ order.phone }}</td>
       <td>{{ order.shipping_address }}</td>
       <td><a href="{% url 'customer_order_dash' order.email  %}" class="btn btn-primary btn-sm">{{ order.full_name }}'s Orders</a></td>
-
-      <td><a href="#"><i class="bi bi-pencil fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
-      <td><a href="#"><i class="bi bi-trash fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
     </tr>
     {% endfor %}  
   </tbody>

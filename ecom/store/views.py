@@ -46,6 +46,17 @@ def orders_dash(request):
     else:
         messages.success(request, 'Access denied to this page')
         return redirect('home')
+    
+
+def order_del(request,pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        order = Order.objects.get(id=pk)
+        order.delete()
+        messages.success(request, 'Order deleted successfully')
+        
+        orders = Order.objects.all()
+        return render(request, 'orders_dash.html', {'orders': orders})
+
 
 
 def customers_dash(request):
@@ -68,7 +79,6 @@ def customers_dash(request):
     else:
         messages.success(request, 'Access denied to this page')
         return redirect('home')
-
 
 
 def order_dash(request, user):

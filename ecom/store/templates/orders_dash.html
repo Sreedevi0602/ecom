@@ -31,9 +31,13 @@
       <td>₹ {{item.amount_paid}}</td>
       <td>{{item.full_name}}</td>
       <td>{{item.date_ordered}}</td>
-      <td>{{item.shipped}}</td>
+      {% if item.shipped %}
+      <td>Yes</td>
+      {% else %}
+      <td>No</td>
+      {% endif %}
       <td><a href="{% url 'orderin_dash' item.id %}" class="btn btn-primary btn-sm">Order {{item.id}}</a></td>
-      <td><a href="#"><i class="bi bi-trash fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
+      <td><a href="{% url 'order_del' item.pk %}"><i class="bi bi-trash fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
     </tr>
     {% endfor %}
   </tbody>
