@@ -14,6 +14,19 @@ import datetime
 # Create your views here.
 
 #Dashboard
+def my_orders(request):
+    if request.user.is_authenticated:
+        user = request.user
+        orders = Order.objects.filter(user=user)
+        items = OrderItem.objects.filter(order__in=orders)
+
+        return render(request, 'my_orders.html', {'orders': orders, 'items': items })
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
+
+
 def customer_order_dash(request, email):
     if request.user.is_authenticated and request.user.is_superuser:
         orders = Order.objects.filter(email=email)

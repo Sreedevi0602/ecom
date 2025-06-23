@@ -1,6 +1,6 @@
 <!-- Navigation-->
     <nav class="navbar navbar-expand-lg" style="background: #0a1f44;">
-      <div class="container px-4 px-lg-5">
+      <div class="container px-1 px-lg-2">
         <a class="navbar-brand" href="{% url 'home' %}">Aloud</a>
         <button
           class="navbar-toggler"
@@ -23,30 +23,6 @@
             <li class="nav-item"><a class="nav-link" href="{% url 'search' %}">Search</a></li>
 
           {% if user.is_authenticated %}
-
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                id="navbarDropdown"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >Profile</a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background: #0a1f44;">
-                <li><a class="dropdown-item" href=#><i class="bi bi-person-fill fs-3"></i><span class="fs-5"> Hi {{ user }}</span></a></li>
-                <li><hr class="dropdown-divider" /></li>
-
-                <li><a class="dropdown-item" href="{% url 'update_user' %}">Edit Profile</a></li>
-
-                <li><a class="dropdown-item" href="{% url 'update_info' %}">Update Details</a></li>
-
-                <li><a class="dropdown-item" href="{% url 'update_password' %}">Change Password</a></li>
-                
-                
-              </ul>
-            </li>
-
 
             {% if user.is_superuser %}
             <li class="nav-item dropdown">
@@ -86,7 +62,7 @@
 
             
             
-            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            
 
           {% else %}
 
@@ -119,6 +95,38 @@
               </ul>
             </li>
           </ul>
+
+          {% if user.is_authenticated %}
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ms-lg-4">
+        
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdown"
+                
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                ><i class="bi bi-person-fill fs-3"></i></a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background: #0a1f44;">
+                <li><a class="dropdown-item">Hi {{ user }}</a></li>
+                <li><a class="dropdown-item" href="{% url 'my_orders' %}">My Orders</a></li>
+                <li><hr class="dropdown-divider" /></li>
+
+                <li><a class="dropdown-item" href="{% url 'update_user' %}">Edit Profile</a></li>
+
+                <li><a class="dropdown-item" href="{% url 'update_info' %}">Update Details</a></li>
+
+                <li><a class="dropdown-item" href="{% url 'update_password' %}">Change Password</a></li>
+                
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                
+              </ul>
+            </li>
+          </ul>
+            {% endif %}
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 ms-lg-4">
+            <li class="nav-item">
           <form class="d-flex">
             <a href="{% url 'cart_summary' %}" 
             style="text-decoration: none; color: rgb(255, 255, 255);">
@@ -130,6 +138,11 @@
             </span>
             </a>
           </form>
+          </li>
+          </ul>
+          
+
+
         </div>
       </div>
     </nav>
