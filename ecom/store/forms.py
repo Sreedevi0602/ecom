@@ -104,7 +104,7 @@ class BookUpdateForm(forms.ModelForm):
 	name = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name', 'type': 'text', 'name': 'name'}), required=False)
 	author = forms.CharField(label='', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Author', 'type': 'text', 'name': 'author'}), required=False)
 	price = forms.DecimalField(label='Price', widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Price', 'type': 'number', 'name': 'price'}), required=False)
-	stock = forms.IntegerField(label='Total Stock', widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total Stock', 'type': 'number', 'name': 'stock'}), required=False)
+	stock = forms.IntegerField(label='Total Stock', min_value=0, widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total Stock', 'type': 'number', 'name': 'stock'}), required=False)
 	category = forms.ModelChoiceField(label='', queryset=Category.objects.all(), required=False, widget=forms.Select(attrs={'class': 'form-control'}))
 	description = forms.CharField(label='', widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Description', 'rows': 4, 'type': 'text', 'name': 'description'}), required=False)
 	image = forms.ImageField(label='', widget=forms.ClearableFileInput(attrs={'class': 'form-control', 'type': 'file', 'name': 'image'}), required=False)

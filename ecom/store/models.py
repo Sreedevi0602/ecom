@@ -64,7 +64,7 @@ class Product(models.Model):
     author = models.CharField(max_length=50)
     price = models.DecimalField(default=0, decimal_places=2, max_digits=9)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
-    stock = models.IntegerField(null=True, blank=False, default=0)
+    stock = models.PositiveIntegerField(null=False, blank=False, default=0)
     description = models.TextField(max_length=1000, default='', blank=True, null=True)
     image = models.ImageField(upload_to='uploads/product')
     # Add sale icon

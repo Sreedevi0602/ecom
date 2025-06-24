@@ -17,20 +17,51 @@ import datetime
 def cancel_order(request,pk):
     if request.user.is_authenticated:
         order = get_object_or_404(Order, user=request.user, id=pk)
+
+        order_items = OrderItem.objects.filter(order=order)
+
+        #Restore stock
+        for item in order_items:
+            product = item.product
+            product.stock += item.quantity
+            product.save()
+
+        
         order.delete()
         messages.success(request, 'Order cancelled successfully')
 
-        orders = Order.objects.filter(user=request.user)
-        return render(request, 'my_orders.html', {'orders': orders})
+        orders = Order.objects.filter(user=request.user).order_by('-id')
+        orders_with_items = []
+        for order in orders:
+            items = OrderItem.objects.filter(order=order)
+            orders_with_items.append({
+                'order': order,
+                'items': items
+            })
+        
+
+        return render(request, 'my_orders.html', {'orders': orders, 'orders_with_items': orders_with_items })
+    
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
 
 
 def my_orders(request):
     if request.user.is_authenticated:
         user = request.user
-        orders = Order.objects.filter(user=user)
-        items = OrderItem.objects.filter(order__in=orders)
+        orders = Order.objects.filter(user=user).order_by('-id')
 
-        return render(request, 'my_orders.html', {'orders': orders, 'items': items })
+        orders_with_items = []
+        for order in orders:
+            items = OrderItem.objects.filter(order=order)
+            orders_with_items.append({
+                'order': order,
+                'items': items
+            })
+        
+
+        return render(request, 'my_orders.html', {'orders': orders, 'orders_with_items': orders_with_items })
     
     else:
         messages.success(request, 'Access denied to this page')

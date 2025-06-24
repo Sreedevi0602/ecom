@@ -1,90 +1,79 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    
-
-    <div class="container">
-        <div class="row">
-            <center>
-                <div class="col-12">
-                    
-<br/><br/>
-<div class="card" style= "width: 600px; border-width: 3px; border-color: #0a1f44;">
-  <div class="card-body" style="background: #0a1f44;">
-    
-        <h2 style="color: white;">My Orders</h2>
-    
-  </div>
-</div>
-
-<br/><br/>
-{% if orders %}
-{% for order in orders %}
-<div class="card" style="width: 32rem;">
-  <div class="card-body" style="text-align: left;">
-    
-      <h5>Order ID: <td>{{order.id}}</td></h5>
-      <B style="color: rgb(71, 70, 70); font-weight: 400;">Amount Paid:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">₹ {{order.amount_paid}}</B><br/>
-      
-      
-      {% if order.date_shipped %}
-        <B style="color: rgb(71, 70, 70); font-weight: 400;">Date Ordered:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{order.date_ordered}}</B><br/>
-        <B style="color: rgb(71, 70, 70); font-weight: 400;">Date Shipped:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{order.date_shipped}}</B><br/>
-      {% else %}
-        <B style="color: rgb(71, 70, 70); font-weight: 400;">Date Ordered:</B> <B style="color: rgb(71, 70, 70); font-weight: 300;">{{order.date_ordered}}</B><br/><br/>
-      {% endif %}
-      <B style="color: rgb(71, 70, 70); font-weight: 400;">Items:</B> <br/>
-
-      {% for item in items %}
-        <div class="item-container">
-      <!-- Image -->
-      <div class="item-image">
-        <img src="{{ item.product.image.url }}" alt="{{ item.name }}">
-      </div>
-
-      <!-- Name + Author on left, Price on right -->
-      <div class="item-details">
-        <div class="item-left">
-          <B style="font-weight: 500;">{{ item.product.name }}</B><br/>
-          {{ item.product.author }}<br/>
-          
-              <small>Quantity: {{ item.quantity }}</small>
-            
+<div class="container">
+  <div class="row">
+    <center>
+      <div class="col-12">
+        <br/><br/>
+        <div class="card" style="width: 600px; border-width: 3px; border-color: #0a1f44;">
+          <div class="card-body" style="background: #0a1f44;">
+            <h2 style="color: white;">My Orders</h2>
+          </div>
         </div>
-        <div class="item-right">
-            ₹ {{ item.price }}
-          
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-    <br/>
-    {% if not order.shipped %}
-  <center><a href="{% url 'cancel_order' order.pk %}" class="btn btn-danger">Cancel</a></center>
-    {% else %}
-    <p style="font-size:x-small; color: grey;">Shipped Orders are non-cancellable</p>
-    {% endif %}
-    
-  </div>
-</div>
-<br/>
-{% endfor %}
+        <br/><br/>
 
-{%  else %}
-No Orders Yet
-{% endif %}
+        {% if orders_with_items %}
+          {% for group in orders_with_items %}
+            {% with order=group.order items=group.items %}
+              <div class="card" style="width: 32rem;">
+                <div class="card-body" style="text-align: left;">
+                  <h5>Order ID: {{ order.id }}</h5>
+                  <b style="color: rgb(71, 70, 70); font-weight: 400;">Amount Paid:</b>
+                  <b style="color: rgb(71, 70, 70); font-weight: 300;">₹ {{ order.amount_paid }}</b><br/>
 
-<br/><br/><br/><br/>
+                  {% if order.date_shipped %}
+                    <b style="color: rgb(71, 70, 70); font-weight: 400;">Date Ordered:</b>
+                    <b style="color: rgb(71, 70, 70); font-weight: 300;">{{ order.date_ordered }}</b><br/>
+                    <b style="color: rgb(71, 70, 70); font-weight: 400;">Date Shipped:</b>
+                    <b style="color: rgb(71, 70, 70); font-weight: 300;">{{ order.date_shipped }}</b><br/>
+                  {% else %}
+                    <b style="color: rgb(71, 70, 70); font-weight: 400;">Date Ordered:</b>
+                    <b style="color: rgb(71, 70, 70); font-weight: 300;">{{ order.date_ordered }}</b><br/><br/>
+                  {% endif %}
 
+                  <b style="color: rgb(71, 70, 70); font-weight: 400;">Items:</b><br/>
 
+                  {% for item in items %}
+                    <div class="item-container">
+                      <div class="item-image">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                      </div>
+                      <div class="item-details">
+                        <div class="item-left">
+                          <b style="font-weight: 500;">{{ item.product.name }}</b><br/>
+                          {{ item.product.author }}<br/>
+                          <small>Quantity: {{ item.quantity }}</small>
+                        </div>
+                        <div class="item-right">
+                          ₹ {{ item.price }}
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
 
-                    
+                  <br/>
+                  {% if not order.shipped %}
+                    <center><a href="{% url 'cancel_order' order.pk %}" class="btn btn-danger">Cancel</a></center>
+                  {% else %}
+                    <p style="font-size:x-small; color: grey;">Shipped Orders are non-cancellable</p>
+                  {% endif %}
                 </div>
-            </center>
-        </div>
-    </div>
+              </div>
+              <br/>
+            {% endwith %}
+          {% endfor %}
+        {% else %}
+          No Orders Yet
+        {% endif %}
 
-    <style>
+        <br/><br/><br/><br/>
+      </div>
+    </center>
+  </div>
+</div>
+
+<style>
   .item-container {
     display: flex;
     align-items: center;
@@ -92,41 +81,28 @@ No Orders Yet
     border-bottom: 1px solid #eee;
     padding: 10px 0;
   }
-
   .item-image {
     flex: 0 0 auto;
     margin-right: 15px;
   }
-
   .item-image img {
     height: 70px;
     width: 65px;
   }
-
   .item-details {
     flex-grow: 1;
     display: flex;
     justify-content: space-between;
     width: 100%;
   }
-
   .item-left {
     text-align: left;
   }
-
   .item-right {
     text-align: right;
     white-space: nowrap;
     margin-left: 20px;
   }
-
-  .product-image img {
-    width: 80px;
-    height: 100px;
-    object-fit: cover;
-    
-  }
 </style>
-
 
 {% endblock %}

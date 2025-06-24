@@ -1,85 +1,98 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 {% block content %}
 
-    <!-- Header-->
-    <header class="bg-dark py-5">
-      <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-          <h1 class="display-4 fw-bolder">{{product.name}}</h1>
-          <p class="lead fw-normal text-white-50 mb-0">
-            {{product.author}}
-          </p>
-        </div>
-      </div>
-    </header>
-
-<br/><br/>
-
-    <div class="container">
-     <div class="card mb-3">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src= "{{ product.image.url }}" class="img-fluid rounded-start" style="height: 410px;" alt="...">
+<!-- Header-->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">{{ product.name }}</h1>
+      <p class="lead fw-normal text-white-50 mb-0">{{ product.author }}</p>
     </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <p class="card-text" style="color: rgb(98, 95, 95);">{{product.book_id}}</p>
-        <h2 class="card-title">{{product.name}}</h2>
-        <h5 class="card-title" style="font-weight: 400;">{{product.author}}</h5>
+  </div>
+</header>
 
-        {% if product.is_sale %}
-            <!-- Product price-->
-             
-            <strike>
-            <h6 style="font-weight: 300;"> ₹ {{product.price}}
-            </strike>&nbsp;
-            ₹ {{product.sale_price}} </h6>
+<br /><br />
+
+<div class="container">
+  <div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-4">
+        {% if product.stock == 0 %}
+        <!-- Out of stock Badge -->
+        <div class="badge bg-dark text-white position-absolute" style="top: 0,5 rem; right: 0.5 rem; margin-top: 3px; margin-left: 3px;">Out of stock</div>
         {% else %}
-            <h6 style="font-weight: 300;"> ₹ {{product.price}}</h6>
-            
-
-           
-
+        <div class="badge bg-success text-white position-absolute" style="top: 0.5 rem; right: 0.5 rem; margin-top: 3px; margin-left: 3px;">In stock</div>
         {% endif %}
-
-
-        <p class="card-text">{{product.description}}</p>
-
-        <div class="col-md-2">
-  <div class="d-flex align-items-center gap-2">
-    <label for="quantitySelect" class="mb-0">Quantity:</label>
-    <select class="form-select form-select-sm w-auto" id="qty-cart">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-    </select>
-  </div>
-</div>
-  
-
-        </div >
-        <div style="margin-left: 15px;">
-
-        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
-
-        <button class="btn btn-secondary" type="button" value="{{product.id}}" id="add-cart">Add to Cart</button>
-        
-        </div>
-        
+        <img src="{{ product.image.url }}" class="img-fluid rounded-start" style="height: 410px;" alt="...">
       </div>
-    </div>
-  </div>
-</div>
-    </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <p class="card-text" style="color: rgb(98, 95, 95);">{{ product.book_id }}</p>
+          <h2 class="card-title">{{ product.name }}</h2>
+          <h5 class="card-title" style="font-weight: 400;">{{ product.author }}</h5>
 
-    <br/><br/>
+          {% if product.is_sale %}
+            <h6 style="font-weight: 300;">
+              <strike>₹ {{ product.price }}</strike> &nbsp; ₹ {{ product.sale_price }}
+            </h6>
+          {% else %}
+            <h6 style="font-weight: 300;">₹ {{ product.price }}</h6>
+          {% endif %}
+
+          <p class="card-text">{{ product.description }}</p>
+
+          {% if product.stock == 0 %}
+            <div class="col-md-2">
+              <div class="d-flex align-items-center gap-2">
+                <label for="quantitySelect" class="mb-0">Quantity:</label>
+                <select class="form-select form-select-sm w-auto" id="qty-cart" disabled>
+                  <option value="1">0</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <p style="margin-top: 25px; font-size: small; color: grey;">Out of stock</p>
+            </div>
+
+            <div style="margin-left: 15px;">
+              <a href="{% url 'home' %}" class="btn btn-secondary" style="margin-left: -15px;">Back to Home</a>
+            </div>
+
+
+          {% else %}
+
+
+            <div class="col-md-2">
+              <div class="d-flex align-items-center gap-2">
+                <label for="quantitySelect" class="mb-0">Quantity:</label>
+                <select class="form-select form-select-sm w-auto" id="qty-cart">
+  {% for i in 1|to:product.stock %}
+    <option value="{{ i }}">{{ i }}</option>
+  {% endfor %}
+</select>
+
+              </div>
+            </div>
+
+            <div>
+              <p style="margin-top: 25px; font-size: small; color: grey;">{{ product.stock }} book(s) left in stock</p>
+            </div>
+
+            <div style="margin-left: 15px;">
+              <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+              <button class="btn btn-secondary" type="button" value="{{ product.id }}" id="add-cart">Add to Cart</button>
+            </div>
+          {% endif %}
+        </div> <!-- /.card-body -->
+      </div> <!-- /.col-md-8 -->
+    </div> <!-- /.row -->
+  </div> <!-- /.card -->
+</div> <!-- /.container -->
+
+<br /><br />
+
 
     <script>
 
@@ -110,3 +123,150 @@
     </script>
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+
+
+     Header
+    <header class="bg-dark py-5">
+      <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+          <h1 class="display-4 fw-bolder">{{product.name}}</h1>
+          <p class="lead fw-normal text-white-50 mb-0">
+            {{product.author}}
+          </p>
+        </div>
+      </div>
+    </header>
+
+<br/><br/>
+
+    <div class="container">
+     <div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src= "{{ product.image.url }}" class="img-fluid rounded-start" style="height: 410px;" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <p class="card-text" style="color: rgb(98, 95, 95);">{{product.book_id}}</p>
+        <h2 class="card-title">{{product.name}}</h2>
+        <h5 class="card-title" style="font-weight: 400;">{{product.author}}</h5>
+
+        {% if product.is_sale %}
+            
+             
+            <strike>
+            <h6 style="font-weight: 300;"> ₹ {{product.price}}
+            </strike>&nbsp;
+            ₹ {{product.sale_price}} </h6>
+        {% else %}
+            <h6 style="font-weight: 300;"> ₹ {{product.price}}</h6>
+            
+
+           
+
+        {% endif %}
+
+
+        <p class="card-text">{{product.description}}</p>
+
+
+{% if product.stock == 0 %}
+            
+            <div class="col-md-2">
+  <div class="d-flex align-items-center gap-2">
+    <label for="quantitySelect" class="mb-0">Quantity:</label>
+    <select class="form-select form-select-sm w-auto" id="qty-cart">
+      <option value="1">0</option>
+      </select>
+  </div>
+</div>
+
+
+            <div>
+            <p style="margin-top: 25px; font-size: small; color: grey;">Out of stock</p>
+            </div>
+
+
+            </div >
+        <div style="margin-left: 15px;">
+
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+
+        </div>
+        
+      
+{% else %}
+
+
+        <div class="col-md-2">
+  <div class="d-flex align-items-center gap-2">
+    <label for="quantitySelect" class="mb-0">Quantity:</label>
+    <select class="form-select form-select-sm w-auto" id="qty-cart">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+  </div>
+</div>
+
+  
+  
+<div> 
+  <p style="margin-top: 25px; font-size: small; color: grey;">{{product.stock}} book left in stock</p>
+  {% endif %}
+</div> 
+
+        
+        <div style="margin-left: 15px;">
+
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+
+        <button class="btn btn-secondary" type="button" value="{{product.id}}" id="add-cart">Add to Cart</button>
+        
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+
+    <br/><br/>
+
+    -->
+
+

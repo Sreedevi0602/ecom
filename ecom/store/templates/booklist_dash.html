@@ -21,6 +21,7 @@
       <th scope="col">Author</th>
       <th scope="col">Price</th>
       <th scope="col">Category</th>
+      <th scope="col">Available</th>
       <th scope="col">Description</th>
       <th scope="col">Update</th>
       <th scope="col">Delete</th>
@@ -40,6 +41,7 @@
       <td>₹{{ book.price }}</td>
       {% endif %}
       <td>{{ book.category }}</td>
+      <td>{{ book.stock }}</td>
       <td>{{ book.description }}</td>
       <td><a href="{% url 'booklist_edit' book.pk %}"><i class="bi bi-pencil fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
       <td><a href="{% url 'booklist_del' book.pk %}"><i class="bi bi-trash fs-5" style="color: rgb(41, 39, 39);"></i></a></td>
