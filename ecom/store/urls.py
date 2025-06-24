@@ -42,6 +42,8 @@ urlpatterns = [
     path('userslist_dash/', views.userslist_dash, name= 'userslist_dash'),      #To view all the signedup users in the dashboard
 
     path('users_del/<int:pk>/', views.users_del, name='users_del'),
+    path('user_edit/<int:pk>/', views.user_edit, name ='user_edit'),
+    path('user_update/', views.user_update, name= 'user_update'),
 
     path('profile_dash/<int:pk>/', views.profile_dash, name= 'profile_dash'),       #To view profiles of all the signedup users in the dashboard
     path('order_dash/<int:user>/', views.order_dash, name= 'order_dash'),       #To view the orders of each signedup users in the dashboard

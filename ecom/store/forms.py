@@ -123,3 +123,23 @@ class CategoryUpdateForm(forms.ModelForm):
 	class Meta:
 		model = Category
 		fields = ['name', 'image']
+
+
+class UserUpdateForm(UserChangeForm):
+	password = None
+	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address', 'name': 'email', 'readonly': 'readonly'}))
+	first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'First Name', 'name': 'first_name'}))
+	last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Last Name', 'name': 'last_name'}))
+
+	class Meta:
+		model = User
+		fields = ('username', 'first_name', 'last_name', 'email')
+
+	def __init__(self, *args, **kwargs):
+		super(UserUpdateForm, self).__init__(*args, **kwargs)
+
+		self.fields['username'].widget.attrs['class'] = 'form-control'
+		self.fields['username'].widget.attrs['placeholder'] = 'User Name'
+		self.fields['username'].widget.attrs['name'] = 'username'
+		self.fields['username'].label = ''
+		self.fields['username'].help_text = '<span class="form-text text-muted"><small>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small></span>'

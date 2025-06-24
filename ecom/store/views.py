@@ -7,7 +7,7 @@ from django.db.models import Q
 import json
 from cart.cart import Cart
 from payment.forms import ShippingForm
-from .forms import BooksForm, CategoryForm, BookUpdateForm, CategoryUpdateForm
+from .forms import BooksForm, CategoryForm, BookUpdateForm, CategoryUpdateForm, UserUpdateForm
 from payment.models import ShippingAddress, Order, OrderItem
 import datetime
 
@@ -171,6 +171,36 @@ def users_del(request, pk):
             })   
             
         return render(request, 'userslist_dash.html', {'user_data': user_data})
+    
+
+def user_edit(request, pk):
+    if request.user.is_authenticated and request.user.is_superuser:
+        user = User.objects.get(id=pk)
+        user_update_form = UserUpdateForm(instance=user)
+        return render(request, 'user_edit.html', {'user': user, 'user_update_form': user_update_form})
+    
+
+def user_update(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        if request.method == "POST":
+            user_id = request.POST.get("id")
+            user = User.objects.get(id=user_id)
+
+            user_update_form = UserUpdateForm(request.POST,instance=user)
+            if user_update_form.is_valid():
+                user_update_form.save()
+                messages.success(request, 'User Updated Successfully')
+                return redirect('userslist_dash')
+            
+            else:
+                messages.error(request, 'Invalid form')
+
+        else:
+            return redirect('user_edit')
+        
+    else:
+        messages.success(request, 'Access denied to this page')
+        return redirect('home')
 
 
 def category_dash(request, cat):

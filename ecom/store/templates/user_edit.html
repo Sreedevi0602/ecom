@@ -1,0 +1,69 @@
+{% extends 'base.html' %} 
+{% load widget_tweaks %}
+{% block content %}
+
+
+<div class="container">
+        <div class="row">
+            <center>
+                <div class="col-12">
+                    
+<br/><br/>
+
+
+<h1>Update User</h1>
+
+<div class="container">
+  <div class="row">
+    <center>
+      <div class="col-8">
+        <br /><br />
+
+        <form method="POST" action="{% url 'user_update' %}">
+          {% csrf_token %}
+
+        <div class="mb-3">
+                            
+            <input type="hidden" name="id" value="{{user.id}}">
+        </div>
+
+        <div class="mb-3">
+                            
+            {{ user_update_form.username|add_class:"form-control"|attr:"placeholder:UserName" }}
+        </div>
+
+        <div class="mb-3">
+                            
+            {{ user_update_form.first_name|add_class:"form-control"|attr:"placeholder:First Name" }}
+        </div>
+
+        <div class="mb-3">
+                            
+            {{ user_update_form.last_name|add_class:"form-control"|attr:"placeholder:Last Name" }}
+        </div>
+
+        <div class="mb-3">
+                            
+            {{ user_update_form.email|add_class:"form-control"|attr:"placeholder:Email"|attr:"readonly:readonly" }}
+        </div>
+
+        
+
+        <button type="submit" class="btn btn-primary w-30">Update</button>
+
+          
+          
+        </form>
+
+        <br /><br /><br /><br /><br /><br />
+      </div>
+    </center>
+  </div>
+</div>
+
+</div>
+</div>
+        </center>
+    </div>
+
+{% endblock %}
