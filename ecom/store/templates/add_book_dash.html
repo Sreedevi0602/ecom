@@ -36,8 +36,13 @@
                         </div>
 
                         <div class="mb-3">
-                            
+                            <label for="price">Price:</label>
                             {{ book_form.price|add_class:"form-control"|attr:"placeholder:Price" }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="stock">Total Stock:</label>
+                            {{ book_form.stock|add_class:"form-control"|attr:"placeholder:Total Stock" }}
                         </div>
 
                         <div class="mb-3">
@@ -61,7 +66,7 @@
 
 
                         <div class="mb-3">
-                            
+                            <label for="sale_price">Sale Price:</label>
                             {{ book_form.sale_price|add_class:"form-control"|attr:"placeholder:Sale Price" }}
                         </div>
 
