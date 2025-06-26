@@ -105,6 +105,14 @@ def orders_dash(request):
 def order_del(request,pk):
     if request.user.is_authenticated and request.user.is_superuser:
         order = Order.objects.get(id=pk)
+
+        items = OrderItem.objects.filter(order=order)
+
+        for item in items:
+            product = item.product
+            product.stock += item.quantity
+            product.save()
+            
         order.delete()
         messages.success(request, 'Order deleted successfully')
         
