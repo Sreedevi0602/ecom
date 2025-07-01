@@ -60,6 +60,8 @@
               <a href="{% url 'home' %}" class="btn btn-secondary" style="margin-left: -15px;">Back to Home</a>
             </div>
 
+            <button class="btn btn-secondary" type="button" value="{{ product.id }}" id="add-wishlist">Add to Wishlist</button>
+
 
           {% else %}
 
@@ -83,6 +85,7 @@
             <div style="margin-left: 15px;">
               <a href="{% url 'home' %}" class="btn btn-secondary" style="margin-left: -15px;">Back to Home</a>
               <button class="btn btn-secondary" type="button" value="{{ product.id }}" id="add-cart">Add to Cart</button>
+              <button class="btn btn-secondary" type="button" value="{{ product.id }}" id="add-wishlist">Add to Wishlist</button>
             </div>
           {% endif %}
         </div> <!-- /.card-body -->
@@ -110,6 +113,30 @@
           },
           success: function(json){
             document.getElementById('cart_quantity').
+            textContent=json.qty
+            location.reload();
+          },
+          error:function(xhr,errmsg,err){
+
+          }
+
+        });
+      })
+
+
+      //check if button pressed
+      $(document).on('click', '#add-wishlist', function(e){
+        e.preventDefault();
+        $.ajax({
+          type:"POST",
+          url:"{% url 'wishlist_add' %}",
+          data:{
+            product_id:$('#add-wishlist').val(),
+            csrfmiddlewaretoken: '{{csrf_token}}',
+            action: 'post'
+          },
+          success: function(json){
+            document.getElementById('wishlist_length').
             textContent=json.qty
             location.reload();
           },

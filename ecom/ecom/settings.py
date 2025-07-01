@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'store',
     'cart',
     'payment',
+    'wishlist',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processors.categories_processor',
                 'cart.context_processors.cart',
+                'wishlist.context_processors.wishlist',
             ],
         },
     },
